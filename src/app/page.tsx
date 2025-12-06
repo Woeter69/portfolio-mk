@@ -1,380 +1,382 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState, useEffect } from "react";
+import Modal from "../components/Modal";
+import YouTubeSection from "../components/YouTubeSection";
+import {
+  profile,
+  researchAreas,
+  education,
+  experience,
+  achievements,
+  publications,
+  projects
+} from "../data/portfolio";
 
 const navLinks = [
   { href: "#about", label: "About" },
   { href: "#research", label: "Research" },
+
   { href: "#publications", label: "Publications" },
   { href: "#teaching", label: "Teaching" },
-  { href: "#education", label: "Education" },
-  { href: "#achievements", label: "Achievements" },
-  { href: "#media", label: "Media" },
+  { href: "#youtube", label: "Content" },
   { href: "#contact", label: "Contact" },
 ] as const;
 
-const researchAreas = [
-  {
-    title: "Nucleic acids & DNA structures",
-    description:
-      "Fundamental and applied aspects of nucleic acid structure, stability, and recognition.",
-  },
-  {
-    title: "Multistranded DNA & G-quadruplexes",
-    description:
-      "Structural diversity and specific recognition of higher-order DNA secondary structures.",
-  },
-  {
-    title: "Nanobiotechnology & applications",
-    description:
-      "Design of nanoscale materials for delivery, sensing, and environmental remediation.",
-  },
-];
-
-const teachingHighlights = [
-  "Undergraduate and postgraduate chemistry courses.",
-  "Interdisciplinary curricula connecting chemistry with biology, materials, and technology.",
-  "Mentoring student projects and research internships.",
-];
-
-const educationTimeline = [
-  {
-    period: "Ph.D. in Chemistry",
-    detail: "Research in nucleic acids / biophysical chemistry (details to be confirmed).",
-  },
-  {
-    period: "M.Phil. / M.Sc. in Chemistry",
-    detail: "Advanced studies in physical and biological chemistry.",
-  },
-  {
-    period: "Academic Positions",
-    detail:
-      "Faculty positions in chemistry and interdisciplinary programmes (exact roles to be finalised).",
-  },
-];
-
-const achievements = [
-  "Peer-reviewed publications in international journals.",
-  "Supervision and co-supervision of student research projects.",
-  "Invited talks and outreach activities in chemistry education.",
-];
-
 export default function Home() {
+  const [activeModal, setActiveModal] = useState<string | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const closeModal = () => setActiveModal(null);
+
   return (
-    <div className="min-h-screen bg-slate-100 text-slate-900">
-      <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/80 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:py-4">
-          <div className="flex items-baseline gap-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.18em] text-sky-700">
-              Chemistry Portfolio
-            </span>
-            <span className="hidden text-xs text-slate-400 md:inline">|</span>
-            <p className="text-sm font-semibold text-slate-900 md:text-base">
-              Prof. Mahima Kaushik
-            </p>
-          </div>
-          <nav className="hidden items-center gap-5 rounded-full border border-slate-200 bg-white/80 px-4 py-1 text-xs font-medium text-slate-600 shadow-sm md:flex md:text-sm">
+    <div className="min-h-screen selection:bg-teal-500/30 selection:text-teal-200">
+      {/* Floating Header */}
+      {/* Floating Header */}
+      <header
+        className={`fixed left-0 right-0 z-50 flex justify-center px-4 transition-all duration-500 ease-in-out ${isScrolled ? 'top-6 translate-y-0 opacity-100' : '-top-20 translate-y-[-100%] opacity-0'
+          }`}
+      >
+        <nav className="glass flex items-center gap-6 rounded-full px-6 py-3 shadow-2xl ring-1 ring-white/10">
+          <Link href="#" className="font-display text-lg font-bold tracking-wide text-gold">
+            {profile.name}
+          </Link>
+          <div className="hidden h-4 w-px bg-white/10 md:block" />
+          <div className="hidden items-center gap-6 md:flex">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="transition-colors hover:text-sky-800"
+                className="text-sm font-medium text-slate-400 transition-colors hover:text-teal-300"
               >
                 {link.label}
               </a>
             ))}
-          </nav>
-        </div>
+          </div>
+        </nav>
       </header>
 
-      <main className="mx-auto flex max-w-6xl flex-col gap-12 px-4 py-10 md:gap-16 md:py-16">
-        <section
-          id="about"
-          className="grid gap-10 rounded-3xl bg-gradient-to-br from-sky-50 via-slate-50 to-slate-100 px-5 py-8 shadow-sm ring-1 ring-slate-200 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] md:items-center md:px-10 md:py-10"
-        >
-          <div className="space-y-5 md:space-y-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-sky-700">
-              About
-            </p>
-            <h1 className="text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl">
-              Prof. Mahima Kaushik
-            </h1>
-            <p className="max-w-2xl text-base leading-relaxed text-slate-800 md:text-lg">
-              Chemistry academic and researcher with interests in nucleic acids, DNA secondary
-              structures, and nanobiotechnology, with a strong commitment to teaching and mentoring
-              students at the interface of chemistry and biology.
-            </p>
-            <div className="flex flex-wrap gap-3 text-xs md:text-sm">
-              <span className="rounded-full bg-sky-100 px-3 py-1 font-medium text-sky-800">
-                Nucleic acids & biophysical chemistry
-              </span>
-              <span className="rounded-full bg-emerald-100 px-3 py-1 font-medium text-emerald-800">
-                Nanobiotechnology
-              </span>
-              <span className="rounded-full bg-violet-100 px-3 py-1 font-medium text-violet-800">
-                Chemistry education
-              </span>
-            </div>
-            <div className="flex flex-wrap gap-3 pt-3 text-xs md:text-sm">
-              <Link
-                href="#research"
-                className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 font-medium text-slate-50 shadow-sm transition hover:bg-slate-800"
-              >
-                View research focus
-              </Link>
-              <Link
-                href="#publications"
-                className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-4 py-2 font-medium text-slate-800 transition hover:border-slate-400 hover:bg-slate-50"
-              >
-                Publications
-              </Link>
-            </div>
-          </div>
+      <main className="relative z-10 mx-auto max-w-7xl px-6 pt-32 pb-20">
 
-          <div className="flex justify-center md:justify-end">
-            <div className="flex h-40 w-40 items-center justify-center overflow-hidden rounded-3xl border border-slate-200 bg-slate-100 shadow-sm md:h-52 md:w-52">
-              <Image
-                src="/next.svg"
-                alt="Portrait placeholder"
-                width={120}
-                height={40}
-                className="opacity-70"
-                priority
-              />
-            </div>
+        {/* Hero Section */}
+        <section className="relative flex flex-col items-center justify-center py-20 text-center md:py-32">
+
+          {/* Top Right Photo */}
+          {/* Big Name Text - Static Gold */}
+          <h1
+            className="mb-8 font-display text-5xl font-bold tracking-tight text-gold md:text-7xl"
+          >
+            {profile.name}
+          </h1>
+
+          <div className="relative mb-8 h-40 w-40 overflow-hidden rounded-full border-4 border-white/5 shadow-2xl md:h-56 md:w-56">
+            <Image
+              src="/photo.jpg"
+              alt={profile.name}
+              width={224}
+              height={224}
+              className="object-cover w-full h-full"
+              priority
+            />
+          </div>
+          <div className="max-w-4xl px-4">
+            <p className="font-display text-2xl font-medium leading-relaxed text-slate-200 md:text-3xl lg:text-4xl">
+              <span className="text-teal-400">More than 20 years</span> of research experience in the field of <span className="text-teal-400">biophysical chemistry</span>, <span className="text-teal-400">structural biology</span> and <span className="text-teal-400">nano-biotechnology</span> for its application in gene/drug delivery and environmental remediation.
+            </p>
+          </div>
+          <div className="mt-10 flex gap-4">
+            <a href="#about" className="rounded-full bg-teal-600 px-8 py-3 text-sm font-semibold text-white shadow-lg shadow-teal-500/20 transition hover:bg-teal-500">
+              Explore Work
+            </a>
+            <a href="#contact" className="rounded-full border border-white/10 bg-white/5 px-8 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
+              Contact Me
+            </a>
           </div>
         </section>
 
-        <section
-          id="research"
-          className="space-y-5 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-200 md:space-y-6 md:p-8"
-        >
-          <div className="space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-sky-700">
-              Research Focus
-            </p>
-            <h2 className="text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">
-              Research areas
-            </h2>
-            <p className="max-w-2xl text-sm leading-relaxed text-slate-700 md:text-base">
-              Representative themes summarising current and past research interests. These entries
-              can be refined with specific projects, grants, and collaborations.
-            </p>
-          </div>
-          <div className="grid gap-5 md:grid-cols-3">
-            {researchAreas.map((area) => (
-              <div
-                key={area.title}
-                className="flex flex-col gap-2 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
-              >
-                <h3 className="text-sm font-semibold text-slate-900 md:text-base">
-                  {area.title}
-                </h3>
-                <p className="text-xs leading-relaxed text-slate-700 md:text-sm">
-                  {area.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section
-          id="publications"
-          className="space-y-5 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-200 md:space-y-6 md:p-8"
-        >
-          <div className="space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-sky-700">
-              Publications
-            </p>
-            <h2 className="text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">
-              Selected publications
-            </h2>
-            <p className="max-w-2xl text-sm leading-relaxed text-slate-700 md:text-base">
-              A curated list of representative publications can be added here, with links to
-              journals, DOIs, or preprints, along with a full CV or publication list.
-            </p>
-          </div>
-          <div className="space-y-3 rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-4 text-xs text-slate-600 md:text-sm">
-            <p>
-              Placeholder: add key papers with title, journal, year, and links. For example:
-            </p>
-            <ul className="list-disc space-y-1 pl-5">
-              <li>
-                Title of a representative article in nucleic acids or nanobiotechnology —
-                <span className="italic"> Journal name</span>, year.
-              </li>
-              <li>
-                Structural or biophysical study of DNA secondary structures —
-                <span className="italic"> Journal name</span>, year.
-              </li>
-            </ul>
-            <p className="pt-1">
-              A link to a Google Scholar, ORCID, or institutional profile can also be placed here.
-            </p>
-          </div>
-        </section>
-
-        <section
-          id="teaching"
-          className="space-y-5 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-200 md:space-y-6 md:p-8"
-        >
-          <div className="space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-sky-700">
-              Teaching
-            </p>
-            <h2 className="text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">
-              Courses & mentoring
-            </h2>
-            <p className="max-w-2xl text-sm leading-relaxed text-slate-700 md:text-base">
-              This section can list undergraduate and postgraduate courses, as well as project and
-              dissertation supervision.
-            </p>
-          </div>
-          <div className="grid gap-4 md:grid-cols-3">
-            {teachingHighlights.map((item) => (
-              <div
-                key={item}
-                className="rounded-2xl border border-slate-200 bg-white p-4 text-xs leading-relaxed text-slate-700 shadow-sm md:text-sm"
-              >
-                {item}
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section
-          id="education"
-          className="space-y-5 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-200 md:space-y-6 md:p-8"
-        >
-          <div className="space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-sky-700">
-              Education & Positions
-            </p>
-            <h2 className="text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">
-              Academic journey
-            </h2>
-          </div>
-          <ol className="space-y-3 border-l border-slate-300 pl-4 text-xs md:text-sm">
-            {educationTimeline.map((entry) => (
-              <li key={entry.period} className="relative pl-3">
-                <span className="absolute -left-[9px] mt-1 h-2.5 w-2.5 rounded-full bg-sky-600" />
-                <p className="font-semibold text-slate-900">{entry.period}</p>
-                <p className="text-slate-700">{entry.detail}</p>
-              </li>
-            ))}
-          </ol>
-        </section>
-
-        <section
-          id="achievements"
-          className="space-y-5 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-200 md:space-y-6 md:p-8"
-        >
-          <div className="space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-sky-700">
-              Achievements
-            </p>
-            <h2 className="text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">
-              Recognitions & service
-            </h2>
-          </div>
-          <ul className="grid gap-3 text-xs md:grid-cols-2 md:text-sm">
-            {achievements.map((item) => (
-              <li
-                key={item}
-                className="rounded-2xl border border-slate-200 bg-white p-4 leading-relaxed text-slate-700 shadow-sm"
-              >
-                {item}
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section
-          id="media"
-          className="space-y-5 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-200 md:space-y-6 md:p-8"
-        >
-          <div className="space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-sky-700">
-              Media & Outreach
-            </p>
-            <h2 className="text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">
-              Lectures & videos
-            </h2>
-            <p className="max-w-2xl text-sm leading-relaxed text-slate-700 md:text-base">
-              Selected lectures, talks, and outreach content hosted on YouTube and other platforms.
-            </p>
-          </div>
-          <div className="grid gap-4 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] md:items-start">
-            <div className="aspect-video overflow-hidden rounded-2xl border border-slate-200 bg-black/90 shadow-sm">
-              <iframe
-                className="h-full w-full"
-                src="https://www.youtube.com/embed?listType=user_uploads&list=mahimakaushik2465"
-                title="Prof. Mahima Kaushik - YouTube lectures"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
-            </div>
-            <div className="space-y-3 rounded-2xl border border-slate-200 bg-white p-4 text-xs text-slate-700 shadow-sm md:text-sm">
-              <p className="font-semibold text-slate-900">YouTube teaching channel</p>
-              <p>
-                A dedicated channel sharing lectures, problem-solving sessions, and explanatory
-                videos in chemistry.
+        {/* About Section */}
+        <section id="about" className="py-20">
+          <div className="grid gap-12 md:grid-cols-2">
+            <div className="space-y-6">
+              <h2 className="flex items-center gap-3 font-display text-3xl text-white">
+                <span className="h-px w-8 bg-gold"></span>
+                About the Professor
+              </h2>
+              <p className="text-lg leading-relaxed text-slate-400">
+                {profile.about}
               </p>
-              <Link
-                href="https://www.youtube.com/@mahimakaushik2465"
-                target="_blank"
-                className="inline-flex items-center gap-1 text-sky-700 underline-offset-2 hover:underline"
+              <button
+                onClick={() => setActiveModal('about')}
+                className="group flex items-center gap-2 text-sm font-medium text-gold hover:text-white transition"
               >
-                Visit channel
-                <span aria-hidden>↗</span>
-              </Link>
-            </div>
-          </div>
-        </section>
+                Read Full Profile <span className="transition-transform group-hover:translate-x-1">→</span>
+              </button>
 
-        <section
-          id="contact"
-          className="space-y-5 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-200 md:space-y-6 md:p-8"
-        >
-          <div className="space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-sky-700">
-              Contact
-            </p>
-            <h2 className="text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">
-              Get in touch
-            </h2>
-          </div>
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="space-y-2 text-xs text-slate-700 md:text-sm">
-              <p>
-                This section can include official institutional email, office address, and links to
-                academic profiles such as Google Scholar, ORCID, ResearchGate, or departmental
-                pages.
-              </p>
-              <dl className="space-y-1">
-                <div>
-                  <dt className="font-semibold text-slate-900">Email</dt>
-                  <dd>email@example.edu (to be updated)</dd>
+              {/* Modal Content for About */}
+              <Modal isOpen={activeModal === 'about'} onClose={closeModal} title="Full Profile">
+                <div className="space-y-6">
+                  <p className="text-lg text-slate-300 leading-relaxed">{profile.about}</p>
+                  <div>
+                    <h3 className="text-xl font-bold text-teal-400 mb-4">Contact Details</h3>
+                    <p><strong>Email:</strong> {profile.email.join(', ')}</p>
+                    <p><strong>Address:</strong> {profile.address}</p>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-teal-400 mb-4">Current Projects</h3>
+                    <ul className="list-disc pl-5 space-y-2">
+                      {projects.map((p, i) => <li key={i}>{p}</li>)}
+                    </ul>
+                  </div>
                 </div>
-              </dl>
+              </Modal>
+
             </div>
-            <div className="space-y-2 rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-4 text-xs text-slate-600 md:text-sm">
-              <p>
-                Optionally, a simple contact form can be added here using a form backend service
-                (e.g., Netlify Forms or similar) if preferred by the institution.
-              </p>
+            <div className="bg-surface glass rounded-3xl p-8">
+              <h3 className="mb-6 text-xl font-semibold text-white">Distinguished Fellowships</h3>
+              <ul className="space-y-4">
+                {achievements.slice(0, 4).map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-slate-300">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold"></span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <button
+                onClick={() => setActiveModal('achievements')}
+                className="mt-6 hidden text-xs font-medium text-slate-500 hover:text-white"
+              >
+                View All Achievements →
+              </button>
+
+              <Modal isOpen={activeModal === 'achievements'} onClose={closeModal} title="All Achievements & Recognitions">
+                <ul className="space-y-4 text-slate-300">
+                  {achievements.map((item, i) => (
+                    <li key={i} className="flex items-start gap-3 border-b border-white/5 pb-3 last:border-0">
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold"></span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </Modal>
             </div>
           </div>
         </section>
+
+        {/* Research Grid */}
+        <section id="research" className="py-20">
+          <h2 className="mb-12 text-center font-display text-4xl text-white">Research Focus</h2>
+          <div className="grid gap-6 md:grid-cols-3">
+            {researchAreas.map((area, index) => (
+              <div key={area.title} className="group glass hover:bg-surface/80 relative overflow-hidden rounded-2xl p-8 transition duration-300 md:min-h-[300px]">
+
+                {/* Specific Vector based on Index */}
+                <div className="absolute top-0 right-0 -mt-6 -mr-6 h-32 w-32 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-12 opacity-80">
+                  {index === 0 && ( /* Nanobiotech - Virus/Nanoparticle */
+                    <svg viewBox="0 0 100 100" className="w-full h-full text-teal-500/20 fill-teal-500/10" stroke="currentColor" strokeWidth="1">
+                      <circle cx="50" cy="50" r="30" />
+                      <path d="M50 20 L50 10 M50 80 L50 90 M20 50 L10 50 M80 50 L90 50 M29 29 L22 22 M71 71 L78 78 M29 71 L22 78 M71 29 L78 22" />
+                      <circle cx="50" cy="50" r="10" fill="currentColor" className="text-teal-400/40" />
+                    </svg>
+                  )}
+                  {index === 1 && ( /* Biophysical - DNA Quadruplex */
+                    <svg viewBox="0 0 100 100" className="w-full h-full text-indigo-500/20 fill-indigo-500/10" stroke="currentColor" strokeWidth="1">
+                      <rect x="30" y="20" width="40" height="10" rx="2" />
+                      <rect x="30" y="40" width="40" height="10" rx="2" />
+                      <rect x="30" y="60" width="40" height="10" rx="2" />
+                      <line x1="50" y1="10" x2="50" y2="90" stroke="currentColor" strokeDasharray="4 2" />
+                    </svg>
+                  )}
+                  {index === 2 && ( /* Structural - Protein Ribbon */
+                    <svg viewBox="0 0 100 100" className="w-full h-full text-pink-500/20 fill-pink-500/10" stroke="currentColor" strokeWidth="1">
+                      <path d="M20 80 Q 40 10, 50 50 T 80 20" fill="none" strokeWidth="3" />
+                      <circle cx="20" cy="80" r="3" fill="currentColor" />
+                      <circle cx="80" cy="20" r="3" fill="currentColor" />
+                      <path d="M25 85 Q 45 15, 55 55 T 85 25" fill="none" strokeWidth="1" opacity="0.5" />
+                    </svg>
+                  )}
+                </div>
+
+                <h3 className="mb-4 text-xl font-bold text-teal-400">{area.title}</h3>
+                <p className="text-slate-400 relative z-10">{area.description}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Publications */}
+        <section id="publications" className="py-20">
+          <div className="mx-auto max-w-4xl">
+            <h2 className="mb-12 flex items-center gap-4 font-display text-3xl text-white">
+              <span className="h-px flex-1 bg-white/10"></span>
+              Selected Publications
+              <span className="h-px flex-1 bg-white/10"></span>
+            </h2>
+            <div className="space-y-6">
+              {publications.slice(0, 3).map((pub, i) => (
+                <div key={i} className="glass rounded-xl p-6 transition hover:border-gold/30">
+                  <p className="text-sm font-semibold text-gold">{pub.year} • {pub.journal}</p>
+                  <h4 className="mt-2 text-lg font-medium text-white">{pub.title}</h4>
+                  <p className="mt-2 text-slate-400 text-sm">{pub.authors}</p>
+                </div>
+              ))}
+
+              <div className="mt-8 text-center bg-surface/50 rounded-xl p-4 cursor-pointer hover:bg-surface transition" onClick={() => setActiveModal('publications')}>
+                <span className="text-sm font-medium text-slate-300 ">View Full Publication List ({publications.length}+ items) →</span>
+              </div>
+
+              <Modal isOpen={activeModal === 'publications'} onClose={closeModal} title="Complete List of Publications">
+                <div className="space-y-8">
+                  {publications.map((pub, i) => (
+                    <div key={i} className="border-b border-white/5 pb-6 last:border-0">
+                      <div className="flex justify-between items-start mb-2">
+                        <span className="text-gold font-mono text-sm">{pub.year}</span>
+                        <span className="text-xs bg-teal-900/40 text-teal-400 px-2 py-1 rounded">IF: {pub.impactFactor}</span>
+                      </div>
+                      <h4 className="text-lg font-medium text-white mb-2">{pub.title}</h4>
+                      <p className="text-slate-400 text-sm mb-1 italic">{pub.journal}</p>
+                      <p className="text-slate-500 text-xs">{pub.authors}</p>
+                    </div>
+                  ))}
+                </div>
+              </Modal>
+            </div>
+          </div>
+        </section>
+
+        {/* Timeline (Education) */}
+        <section id="education" className="py-20">
+          <div className="grid gap-16 md:grid-cols-2">
+            <div>
+              <h2 className="mb-8 font-display text-3xl text-white">Academic Journey</h2>
+              <div className="border-l-2 border-white/10 pl-8 space-y-12">
+                {education.map((edu) => (
+                  <div key={edu.year} className="relative">
+                    <span className="absolute -left-[39px] mt-1.5 h-4 w-4 rounded-full border-2 border-slate-900 bg-gold"></span>
+                    <span className="text-sm font-bold text-gold-dim">{edu.year}</span>
+                    <h3 className="text-lg font-semibold text-white">{edu.degree}</h3>
+                    <p className="text-slate-400">{edu.institution}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div id="teaching">
+              <h2 className="mb-8 font-display text-3xl text-white">Experience</h2>
+              <div className="space-y-6">
+                {experience.map((job, i) => (
+                  <div key={i} className="glass rounded-2xl p-6">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <h3 className="text-lg font-bold text-white">{job.role}</h3>
+                        <p className="text-teal-400">{job.institution}</p>
+                      </div>
+                      <span className="rounded-full bg-white/5 px-3 py-1 text-xs font-medium text-slate-400">
+                        {job.period}
+                      </span>
+                    </div>
+                    <ul className="mt-4 list-disc pl-4 text-sm leading-relaxed text-slate-400 space-y-1">
+                      {job.details.slice(0, 2).map((d, k) => <li key={k}>{d}</li>)}
+                    </ul>
+                    <button onClick={() => setActiveModal(`exp-${i}`)} className="mt-3 hidden text-xs text-gold hover:underline">Read All Responsibilities</button>
+
+                    <Modal isOpen={activeModal === `exp-${i}`} onClose={closeModal} title={`${job.role} @ ${job.institution}`}>
+                      <div className="space-y-4">
+                        <p className="text-slate-300"><strong>Duration:</strong> {job.period}</p>
+                        <h4 className="text-lg font-bold text-white">Key Responsibilities & Contributions</h4>
+                        <ul className="list-disc pl-5 space-y-2 text-slate-300">
+                          {job.details.map((detail, idx) => (
+                            <li key={idx}>{detail}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </Modal>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* YouTube Section */}
+        <YouTubeSection />
+
+        {/* Contact Footer */}
+        <section id="contact" className="mt-20 rounded-3xl bg-teal-900/10 px-6 py-16 text-center ring-1 ring-teal-500/20">
+          <h2 className="font-display text-3xl text-white">Get in Touch</h2>
+          <p className="mx-auto mt-4 max-w-xl text-slate-400">
+            Open to collaborations, research inquiries, and academic mentorship.
+          </p>
+          <div className="mt-8 flex flex-col items-center gap-4 md:flex-row md:justify-center">
+            <a href={`mailto:${profile.email[0]}`} className="flex items-center gap-2 rounded-lg bg-surface px-6 py-3 text-white transition hover:bg-slate-700">
+              <span>✉</span> {profile.email[0]}
+            </a>
+            <a href={`mailto:${profile.email[1]}`} className="flex items-center gap-2 rounded-lg bg-surface px-6 py-3 text-white transition hover:bg-slate-700">
+              <span>✉</span> {profile.email[1]}
+            </a>
+          </div>
+          <p className="mt-12 text-xs text-slate-600">
+            © {new Date().getFullYear()} {profile.name}. All rights reserved.
+          </p>
+        </section>
+
       </main>
 
-      <footer className="mt-10 border-t border-slate-200 bg-white py-5">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 text-xs text-slate-500 md:text-sm">
-          <p>
-            © {new Date().getFullYear()} Prof. Mahima Kaushik. Academic portfolio.
-          </p>
-          <p>Site built with Next.js.</p>
-        </div>
-      </footer>
+      {/* Background Gradients & Scientific Vectors */}
+      <div className="fixed inset-0 top-0 left-0 -z-10 pointer-events-none overflow-hidden mix-blend-screen">
+        <div className="absolute -top-[20%] -left-[10%] h-[50%] w-[50%] rounded-full bg-teal-900/20 blur-[120px]" />
+        <div className="absolute top-[40%] -right-[10%] h-[40%] w-[40%] rounded-full bg-indigo-900/20 blur-[120px]" />
+
+        {/* Scientific SVGs as Background Decor - HIGH OPACITY (50%) */}
+
+        {/* DNA Helix - Top Left */}
+        <svg className="absolute top-20 left-10 w-64 h-64 text-teal-800/40 animate-pulse" viewBox="0 0 100 100" fill="currentColor" style={{ opacity: 0.4 }}>
+          <path d="M30 10 C 20 20, 20 40, 30 50 C 40 60, 40 80, 30 90" stroke="currentColor" strokeWidth="2" fill="none" />
+          <path d="M70 10 C 80 20, 80 40, 70 50 C 60 60, 60 80, 70 90" stroke="currentColor" strokeWidth="2" fill="none" />
+          <line x1="30" y1="15" x2="70" y2="15" stroke="currentColor" strokeWidth="1" />
+          <line x1="25" y1="30" x2="75" y2="30" stroke="currentColor" strokeWidth="1" />
+          <line x1="30" y1="45" x2="70" y2="45" stroke="currentColor" strokeWidth="1" />
+          <line x1="25" y1="60" x2="75" y2="60" stroke="currentColor" strokeWidth="1" />
+          <line x1="30" y1="75" x2="70" y2="75" stroke="currentColor" strokeWidth="1" />
+        </svg>
+
+        {/* Benzene Ring - Bottom Right */}
+        <svg className="absolute bottom-10 right-10 w-96 h-96 text-gold/30 spin-slow" viewBox="0 0 100 100" fill="currentColor" style={{ opacity: 0.3 }}>
+          <polygon points="50,15 85,35 85,75 50,95 15,75 15,35" stroke="currentColor" strokeWidth="1" fill="none" />
+          <circle cx="50" cy="55" r="20" stroke="currentColor" strokeWidth="1" fill="none" />
+        </svg>
+
+        {/* Atom Structure - Mid Left */}
+        <svg className="absolute top-[40%] -left-20 w-80 h-80 text-teal-700/40 rotate-45" viewBox="0 0 100 100" style={{ opacity: 0.4 }}>
+          <ellipse cx="50" cy="50" rx="45" ry="10" stroke="currentColor" strokeWidth="1" fill="none" />
+          <ellipse cx="50" cy="50" rx="45" ry="10" stroke="currentColor" strokeWidth="1" fill="none" transform="rotate(60 50 50)" />
+          <ellipse cx="50" cy="50" rx="45" ry="10" stroke="currentColor" strokeWidth="1" fill="none" transform="rotate(120 50 50)" />
+          <circle cx="50" cy="50" r="5" fill="currentColor" />
+        </svg>
+
+        {/* NEW: Conical Flask - Bottom Left */}
+        <svg className="absolute bottom-20 left-20 w-48 h-48 text-indigo-700/30" viewBox="0 0 100 100" fill="currentColor" style={{ opacity: 0.3 }}>
+          <path d="M40 10 L60 10 L75 80 Q 80 95, 50 95 Q 20 95, 25 80 Z" stroke="currentColor" strokeWidth="2" fill="none" />
+          <line x1="45" y1="30" x2="55" y2="30" stroke="currentColor" strokeWidth="1" />
+          <rect x="42" y="10" width="16" height="5" fill="currentColor" opacity="0.5" />
+        </svg>
+
+        {/* NEW: Hexagon Lattice - Top Right */}
+        <svg className="absolute top-32 right-20 w-64 h-64 text-slate-700/40" viewBox="0 0 100 100" fill="currentColor" style={{ opacity: 0.4 }}>
+          <path d="M10 20 L20 5 L40 5 L50 20 L40 35 L20 35 Z" fill="none" stroke="currentColor" />
+          <path d="M50 20 L60 5 L80 5 L90 20 L80 35 L60 35 Z" fill="none" stroke="currentColor" />
+          <path d="M30 50 L40 35 L60 35 L70 50 L60 65 L40 65 Z" fill="none" stroke="currentColor" />
+        </svg>
+
+      </div>
     </div>
   );
 }
