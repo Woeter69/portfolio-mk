@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import Modal from "../components/Modal";
+import YouTubeSection from "../components/YouTubeSection";
 import {
   profile,
   researchAreas,
@@ -17,9 +18,10 @@ import {
 const navLinks = [
   { href: "#about", label: "About" },
   { href: "#research", label: "Research" },
+
   { href: "#publications", label: "Publications" },
   { href: "#teaching", label: "Teaching" },
-  { href: "#education", label: "Timeline" },
+  { href: "#youtube", label: "Content" },
   { href: "#contact", label: "Contact" },
 ] as const;
 
@@ -303,6 +305,9 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* YouTube Section */}
+        <YouTubeSection />
 
         {/* Contact Footer */}
         <section id="contact" className="mt-20 rounded-3xl bg-teal-900/10 px-6 py-16 text-center ring-1 ring-teal-500/20">
