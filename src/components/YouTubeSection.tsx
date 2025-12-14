@@ -12,6 +12,8 @@ export default function YouTubeSection() {
     const [videos, setVideos] = useState<YouTubeVideo[]>([]);
     const [loading, setLoading] = useState(true);
 
+    const [error, setError] = useState<string | null>(null);
+
     useEffect(() => {
         async function fetchData() {
             try {
@@ -20,9 +22,12 @@ export default function YouTubeSection() {
                     setChannelData(stats);
                     const latestVideos = await getLatestVideos(stats.uploadsPlaylistId);
                     setVideos(latestVideos);
+                } else {
+                    setError("No channel data found. Check API Key or Handle.");
                 }
             } catch (error) {
                 console.error("Failed to load YouTube data", error);
+                setError("Failed to load YouTube content.");
             } finally {
                 setLoading(false);
             }
@@ -34,7 +39,12 @@ export default function YouTubeSection() {
         return <div className="py-20 text-center text-slate-500">Loading YouTube Content...</div>;
     }
 
-    if (!channelData) return null; // Hide section if no data found
+    if (error || !channelData) {
+        // Show a discrete error message in development or logged in, but for public site maybe just hide?
+        // User wants to debug, so let's show it temporarily or use proper logging.
+        // Let's print the error to the UI so the user can see it on Vercel.
+        return <div className="py-20 text-center text-red-400">Unable to load YouTube Section: {error}</div>;
+    }
 
     // Format numbers (e.g. 1500 -> 1.5K)
     const formatCount = (count: string) => {
