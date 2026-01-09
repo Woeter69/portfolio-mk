@@ -36,7 +36,7 @@ export default function YouTubeSection() {
     }, []);
 
     if (loading) {
-        return <div className="py-20 text-center text-slate-500">Loading YouTube Content...</div>;
+        return <div className="py-20 text-center text-slate-500" suppressHydrationWarning>Loading YouTube Content...</div>;
     }
 
     if (error || !channelData) {

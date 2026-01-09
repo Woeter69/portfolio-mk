@@ -28,6 +28,14 @@ const navLinks = [
 export default function Home() {
   const [activeModal, setActiveModal] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [scholarData, setScholarData] = useState<any>(null);
+
+  useEffect(() => {
+    fetch('http://localhost:3001/scholar')
+      .then(res => res.json())
+      .then(data => setScholarData(data))
+      .catch(err => console.error('Failed to load scholar data', err));
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -115,6 +123,25 @@ export default function Home() {
               <p className="text-lg leading-relaxed text-slate-400">
                 {profile.about}
               </p>
+
+              {/* Scholar Stats Section */}
+              {scholarData && (
+                <div className="grid grid-cols-3 gap-4 py-6">
+                  <div className="text-center p-4 bg-surface/50 rounded-2xl ring-1 ring-white/5">
+                    <div className="text-3xl font-bold text-gold">{scholarData.stats.citations.all}</div>
+                    <div className="text-xs text-slate-400 uppercase tracking-widest mt-1">Citations</div>
+                  </div>
+                  <div className="text-center p-4 bg-surface/50 rounded-2xl ring-1 ring-white/5">
+                    <div className="text-3xl font-bold text-teal-400">{scholarData.stats.h_index.all}</div>
+                    <div className="text-xs text-slate-400 uppercase tracking-widest mt-1">h-index</div>
+                  </div>
+                  <div className="text-center p-4 bg-surface/50 rounded-2xl ring-1 ring-white/5">
+                    <div className="text-3xl font-bold text-indigo-400">{scholarData.stats.i10_index.all}</div>
+                    <div className="text-xs text-slate-400 uppercase tracking-widest mt-1">i10-index</div>
+                  </div>
+                </div>
+              )}
+
               <button
                 onClick={() => setActiveModal('about')}
                 className="group flex items-center gap-2 text-sm font-medium text-gold hover:text-white transition"
@@ -126,6 +153,27 @@ export default function Home() {
               <Modal isOpen={activeModal === 'about'} onClose={closeModal} title="Full Profile">
                 <div className="space-y-6">
                   <p className="text-lg text-slate-300 leading-relaxed">{profile.about}</p>
+
+                  {scholarData && (
+                    <div>
+                      <h3 className="text-xl font-bold text-teal-400 mb-4">Research Impact (Google Scholar)</h3>
+                      <div className="grid grid-cols-2 gap-4 mb-6">
+                        <div>
+                          <p className="text-sm text-slate-400">Total Citations</p>
+                          <p className="text-xl font-mono text-white">{scholarData.stats.citations.all} <span className="text-xs text-slate-500">(Since 2018: {scholarData.stats.citations.since2018})</span></p>
+                        </div>
+                        <div>
+                          <p className="text-sm text-slate-400">h-index</p>
+                          <p className="text-xl font-mono text-white">{scholarData.stats.h_index.all} <span className="text-xs text-slate-500">({scholarData.stats.h_index.since2018})</span></p>
+                        </div>
+                        <div>
+                          <p className="text-sm text-slate-400">i10-index</p>
+                          <p className="text-xl font-mono text-white">{scholarData.stats.i10_index.all} <span className="text-xs text-slate-500">({scholarData.stats.i10_index.since2018})</span></p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   <div>
                     <h3 className="text-xl font-bold text-teal-400 mb-4">Contact Details</h3>
                     <p><strong>Email:</strong> {profile.email.join(', ')}</p>
@@ -222,31 +270,59 @@ export default function Home() {
               <span className="h-px flex-1 bg-white/10"></span>
             </h2>
             <div className="space-y-6">
-              {publications.slice(0, 3).map((pub, i) => (
-                <div key={i} className="glass rounded-xl p-6 transition hover:border-gold/30">
-                  <p className="text-sm font-semibold text-gold">{pub.year} • {pub.journal}</p>
-                  <h4 className="mt-2 text-lg font-medium text-white">{pub.title}</h4>
-                  <p className="mt-2 text-slate-400 text-sm">{pub.authors}</p>
-                </div>
-              ))}
+              {scholarData ? (
+                scholarData.publications.slice(0, 3).map((pub: any, i: number) => (
+                  <div key={i} className="glass rounded-xl p-6 transition hover:border-gold/30">
+                    <p className="text-sm font-semibold text-gold">{pub.year} • {pub.journal} <span className="text-slate-500">• {pub.citations} Citations</span></p>
+                    <h4 className="mt-2 text-lg font-medium text-white">
+                      <a href={pub.link} target="_blank" rel="noopener noreferrer" className="hover:text-teal-400 transition">{pub.title}</a>
+                    </h4>
+                    <p className="mt-2 text-slate-400 text-sm">{pub.authors}</p>
+                  </div>
+                ))
+              ) : (
+                publications.slice(0, 3).map((pub, i) => (
+                  <div key={i} className="glass rounded-xl p-6 transition hover:border-gold/30">
+                    <p className="text-sm font-semibold text-gold">{pub.year} • {pub.journal}</p>
+                    <h4 className="mt-2 text-lg font-medium text-white">{pub.title}</h4>
+                    <p className="mt-2 text-slate-400 text-sm">{pub.authors}</p>
+                  </div>
+                ))
+              )}
 
               <div className="mt-8 text-center bg-surface/50 rounded-xl p-4 cursor-pointer hover:bg-surface transition" onClick={() => setActiveModal('publications')}>
-                <span className="text-sm font-medium text-slate-300 ">View Full Publication List ({publications.length}+ items) →</span>
+                <span className="text-sm font-medium text-slate-300 ">View Full Publication List ({scholarData ? scholarData.publications.length : publications.length}+ items) →</span>
               </div>
 
               <Modal isOpen={activeModal === 'publications'} onClose={closeModal} title="Complete List of Publications">
                 <div className="space-y-8">
-                  {publications.map((pub, i) => (
-                    <div key={i} className="border-b border-white/5 pb-6 last:border-0">
-                      <div className="flex justify-between items-start mb-2">
-                        <span className="text-gold font-mono text-sm">{pub.year}</span>
-                        <span className="text-xs bg-teal-900/40 text-teal-400 px-2 py-1 rounded">IF: {pub.impactFactor}</span>
+                  {scholarData ? (
+                    scholarData.publications.map((pub: any, i: number) => (
+                      <div key={i} className="border-b border-white/5 pb-6 last:border-0">
+                        <div className="flex justify-between items-start mb-2">
+                          <span className="text-gold font-mono text-sm">{pub.year}</span>
+                          <span className="text-xs bg-teal-900/40 text-teal-400 px-2 py-1 rounded">Cited by {pub.citations}</span>
+                        </div>
+                        <h4 className="text-lg font-medium text-white mb-2">
+                          <a href={pub.link} target="_blank" rel="noopener noreferrer" className="hover:text-teal-400 transition">{pub.title}</a>
+                        </h4>
+                        <p className="text-slate-400 text-sm mb-1 italic">{pub.journal}</p>
+                        <p className="text-slate-500 text-xs">{pub.authors}</p>
                       </div>
-                      <h4 className="text-lg font-medium text-white mb-2">{pub.title}</h4>
-                      <p className="text-slate-400 text-sm mb-1 italic">{pub.journal}</p>
-                      <p className="text-slate-500 text-xs">{pub.authors}</p>
-                    </div>
-                  ))}
+                    ))
+                  ) : (
+                    publications.map((pub, i) => (
+                      <div key={i} className="border-b border-white/5 pb-6 last:border-0">
+                        <div className="flex justify-between items-start mb-2">
+                          <span className="text-gold font-mono text-sm">{pub.year}</span>
+                          <span className="text-xs bg-teal-900/40 text-teal-400 px-2 py-1 rounded">IF: {pub.impactFactor}</span>
+                        </div>
+                        <h4 className="text-lg font-medium text-white mb-2">{pub.title}</h4>
+                        <p className="text-slate-400 text-sm mb-1 italic">{pub.journal}</p>
+                        <p className="text-slate-500 text-xs">{pub.authors}</p>
+                      </div>
+                    ))
+                  )}
                 </div>
               </Modal>
             </div>
