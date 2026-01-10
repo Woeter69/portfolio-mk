@@ -33,7 +33,7 @@ export default function Home() {
   const [selectedYear, setSelectedYear] = useState<string>("All");
   const [sortBy, setSortBy] = useState<string>("year-desc");
 
-  const publicationsSource = scholarData ? scholarData.publications : publications;
+  const publicationsSource = (scholarData && scholarData.publications) ? scholarData.publications : publications;
 
   // Get unique years for filter dropdown
   const uniqueYears = Array.from(new Set(publicationsSource.map((p: any) => p.year.toString()))).sort().reverse();
