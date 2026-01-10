@@ -52,21 +52,28 @@ export async function GET() {
         const data = response.data;
 
         // 1. Process Stats
-        // SerpApi returns a table array: [ { all: X, since_2018: Y }, ... ]
-        // Index 0: Citations, 1: h-index, 2: i10-index
+        // SerpApi returns a table array: [ { citations: { all: X, since_2021: Y } }, ... ]
         const table = data.cited_by?.table || [];
+
+        const getSince = (obj: any) => {
+            if (!obj) return 0;
+            // Find key starting with 'since' (e.g., since_2021)
+            const key = Object.keys(obj).find(k => k.startsWith('since'));
+            return key ? obj[key] : 0;
+        };
+
         const stats: ScholarStats = {
             citations: {
-                all: table[0]?.all || 0,
-                since2018: table[0]?.since_2018 || 0
+                all: table[0]?.citations?.all || 0,
+                since2018: getSince(table[0]?.citations)
             },
             h_index: {
-                all: table[1]?.all || 0,
-                since2018: table[1]?.since_2018 || 0
+                all: table[1]?.h_index?.all || 0,
+                since2018: getSince(table[1]?.h_index)
             },
             i10_index: {
-                all: table[2]?.all || 0,
-                since2018: table[2]?.since_2018 || 0
+                all: table[2]?.i10_index?.all || 0,
+                since2018: getSince(table[2]?.i10_index)
             },
         };
 
