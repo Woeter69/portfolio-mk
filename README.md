@@ -1,20 +1,8 @@
-# Getting Started
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-This project consists of a Next.js frontend and an Express.js backend API, designed to be run locally for development or deployed using Docker.
+## Getting Started
 
-## Development
-
-First, ensure you have Node.js and npm (or yarn/pnpm/bun) installed.
-
-### 1. Frontend (Next.js)
-
-Navigate to the project root and install dependencies:
-
-```bash
-npm install
-```
-
-Then, run the development server:
+First, run the development server:
 
 ```bash
 npm run dev
@@ -26,57 +14,23 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the Next.js frontend. The page auto-updates as you edit the files in `src/app/`.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-### 2. Backend (Express.js API)
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-Navigate to the `api` directory:
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-```bash
-cd api
-```
+## Learn More
 
-Install dependencies:
+To learn more about Next.js, take a look at the following resources:
 
-```bash
-npm install
-```
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-Then, run the API server:
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-```bash
-npm run start
-```
+## Deploy on Vercel
 
-The Express API will typically run on [http://localhost:3001](http://localhost:3001) (check `api/src/index.ts` for the exact port).
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-## Docker
-
-This project includes Dockerfiles for both the Next.js frontend and the Express.js API, along with a `docker-compose.yml` for easy orchestration.
-
-### 1. Build and Run with Docker Compose
-
-Ensure you have Docker and Docker Compose installed.
-
-From the project root directory, run:
-
-```bash
-docker-compose up --build
-```
-
-This command will seamlessly build all necessary Docker images for both the frontend and backend services, and then start them. It's the recommended way to get your development environment fully up and running.
-
-The Next.js frontend will be accessible at [http://localhost:3000](http://localhost:3000).
-The Express.js API will be accessible at [http://localhost:3001](http://localhost:3001).
-
-To run in detached mode (in the background):
-
-```bash
-docker-compose up -d --build
-```
-
-To stop the services:
-
-```bash
-docker-compose down
-```
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
