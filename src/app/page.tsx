@@ -322,42 +322,46 @@ export default function Home() {
               <Modal isOpen={activeModal === 'publications'} onClose={closeModal} title="Complete List of Publications">
 
                 {/* Search and Filter Controls */}
-                <div className="sticky top-0 z-10 bg-slate-900/95 backdrop-blur-md pb-4 pt-2 -mt-2 mb-6 border-b border-white/10 space-y-4 md:space-y-0 md:flex md:gap-4">
-                  <div className="relative flex-1">
-                    <input
-                      type="text"
-                      placeholder="Search publications..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full rounded-lg bg-surface/50 border border-white/10 px-4 py-2.5 pl-10 text-white placeholder-slate-500 focus:border-teal-400 focus:outline-none focus:ring-1 focus:ring-teal-400 transition"
-                    />
-                    <svg className="absolute left-3 top-3 h-5 w-5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
+                <div className="sticky top-2 z-10 mx-auto w-full mb-6">
+                  <div className="flex flex-col md:flex-row gap-4 bg-surface/80 backdrop-blur-xl border border-white/10 p-4 rounded-2xl shadow-2xl ring-1 ring-white/5">
+                    <div className="relative flex-1">
+                      <input
+                        type="text"
+                        placeholder="Search publications..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full rounded-xl bg-slate-900/50 border border-transparent px-6 py-3.5 pl-12 text-lg text-white placeholder-slate-500 focus:bg-slate-900 focus:border-teal-400 focus:outline-none focus:ring-0 transition"
+                      />
+                      <svg className="absolute left-4 top-4 h-6 w-6 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
+                    </div>
+
+                    <div className="flex gap-3">
+                      <select
+                        value={selectedYear}
+                        onChange={(e) => setSelectedYear(e.target.value)}
+                        className="min-w-[120px] rounded-xl bg-slate-900/50 border border-transparent px-6 py-3.5 text-lg text-slate-300 focus:bg-slate-900 focus:border-teal-400 focus:outline-none focus:ring-0 transition appearance-none cursor-pointer hover:bg-slate-900 hover:text-white"
+                      >
+                        <option value="All">Year</option>
+                        {filteredPublications.length === 0 && selectedYear !== "All" && <option value={selectedYear}>{selectedYear}</option>}
+                        {uniqueYears.map((year: any) => (
+                          <option key={year} value={year}>{year}</option>
+                        ))}
+                      </select>
+
+                      <select
+                        value={sortBy}
+                        onChange={(e) => setSortBy(e.target.value)}
+                        className="min-w-[180px] rounded-xl bg-slate-900/50 border border-transparent px-6 py-3.5 text-lg text-slate-300 focus:bg-slate-900 focus:border-teal-400 focus:outline-none focus:ring-0 transition appearance-none cursor-pointer hover:bg-slate-900 hover:text-white"
+                      >
+                        <option value="year-desc">Newest</option>
+                        <option value="year-asc">Oldest</option>
+                        <option value="citations-desc">Most Cited</option>
+                        <option value="citations-asc">Least Cited</option>
+                      </select>
+                    </div>
                   </div>
-
-                  <select
-                    value={selectedYear}
-                    onChange={(e) => setSelectedYear(e.target.value)}
-                    className="w-full md:w-32 rounded-lg bg-surface/50 border border-white/10 px-4 py-2.5 text-slate-300 focus:border-teal-400 focus:outline-none focus:ring-1 focus:ring-teal-400 transition appearance-none cursor-pointer"
-                  >
-                    <option value="All">All Years</option>
-                    {filteredPublications.length === 0 && selectedYear !== "All" && <option value={selectedYear}>{selectedYear}</option>}
-                    {uniqueYears.map((year: any) => (
-                      <option key={year} value={year}>{year}</option>
-                    ))}
-                  </select>
-
-                  <select
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value)}
-                    className="w-full md:w-48 rounded-lg bg-surface/50 border border-white/10 px-4 py-2.5 text-slate-300 focus:border-teal-400 focus:outline-none focus:ring-1 focus:ring-teal-400 transition appearance-none cursor-pointer"
-                  >
-                    <option value="year-desc">Year (Newest)</option>
-                    <option value="year-asc">Year (Oldest)</option>
-                    <option value="citations-desc">Citations (High to Low)</option>
-                    <option value="citations-asc">Citations (Low to High)</option>
-                  </select>
                 </div>
 
                 <div className="space-y-8">
@@ -365,8 +369,10 @@ export default function Home() {
                     filteredPublications.map((pub: any, i: number) => (
                       <div key={i} className="border-b border-white/5 pb-6 last:border-0">
                         <div className="flex justify-between items-start mb-2">
-                          <span className="text-gold font-mono text-sm">{pub.year}</span>
-                          <span className="text-xs bg-teal-900/40 text-teal-400 px-2 py-1 rounded">Cited by {pub.citations}</span>
+                          <span className="text-gold font-mono text-sm">{pub.year || 'Unknown Year'}</span>
+                          <span className="text-xs bg-teal-900/40 text-teal-400 px-2 py-1 rounded">
+                            {pub.citations ? `${pub.citations} citations` : '0 citations'}
+                          </span>
                         </div>
                         <h4 className="text-lg font-medium text-white mb-2">
                           <a href={pub.link} target="_blank" rel="noopener noreferrer" className="hover:text-teal-400 transition">{pub.title}</a>

@@ -55,7 +55,7 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
                     </div>
 
                     {/* Scrollable Body */}
-                    <div className="flex-1 overflow-y-auto px-8 py-8 custom-scrollbar">
+                    <div className="flex-1 overflow-y-auto px-8 pb-8 pt-4 custom-scrollbar">
                         <div className="prose prose-invert max-w-none prose-headings:font-display prose-a:text-teal-400 prose-li:text-slate-300">
                             {children}
                         </div>
