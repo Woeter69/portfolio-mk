@@ -179,7 +179,7 @@ export default function Home() {
                 <div className="space-y-6">
                   <p className="text-lg text-slate-300 leading-relaxed">{profile.about}</p>
 
-                  {scholarData && (
+                  {scholarData && scholarData.stats && (
                     <div>
                       <h3 className="text-xl font-bold text-teal-400 mb-4">Research Impact (Google Scholar)</h3>
                       <div className="grid grid-cols-2 gap-4 mb-6">
@@ -295,7 +295,7 @@ export default function Home() {
               <span className="h-px flex-1 bg-white/10"></span>
             </h2>
             <div className="space-y-6">
-              {scholarData ? (
+              {scholarData && scholarData.publications ? (
                 scholarData.publications.slice(0, 3).map((pub: any, i: number) => (
                   <div key={i} className="glass rounded-xl p-6 transition hover:border-gold/30">
                     <p className="text-sm font-semibold text-gold">{pub.year} • {pub.journal} <span className="text-slate-500">• {pub.citations} Citations</span></p>
