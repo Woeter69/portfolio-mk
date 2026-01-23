@@ -5,6 +5,9 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import Modal from "../components/Modal";
 import YouTubeSection from "../components/YouTubeSection";
+import AnimatedCounter from "../components/AnimatedCounter";
+import ParticleBackground from "../components/ParticleBackground";
+import { useScrollAnimation } from "../lib/useScrollAnimation";
 import {
   profile,
   researchAreas,
@@ -75,13 +78,15 @@ export default function Home() {
   return (
     <div className="min-h-screen selection:bg-teal-500/30 selection:text-teal-200">
       {/* Floating Header */}
-      {/* Floating Header */}
       <header
-        className={`fixed left-0 right-0 z-50 flex justify-center px-4 transition-all duration-500 ease-in-out ${isScrolled ? 'top-6 translate-y-0 opacity-100' : '-top-20 translate-y-[-100%] opacity-0'
+        className={`fixed left-0 right-0 z-50 flex justify-center px-4 transition-all duration-500 ease-in-out ${isScrolled ? 'top-6' : 'top-0'
           }`}
       >
-        <nav className="glass flex items-center gap-6 rounded-full px-6 py-3 shadow-2xl ring-1 ring-white/10">
-          <Link href="#" className="font-display text-lg font-bold tracking-wide text-gold">
+        <nav className={`flex items-center gap-6 px-6 py-3 transition-all duration-500 ${isScrolled
+            ? 'glass rounded-full shadow-2xl ring-1 ring-white/10'
+            : 'bg-transparent rounded-none shadow-none'
+          }`}>
+          <Link href="#" className="font-display text-lg font-bold tracking-wide gradient-gold">
             {profile.name}
           </Link>
           <div className="hidden h-4 w-px bg-white/10 md:block" />
@@ -104,15 +109,16 @@ export default function Home() {
         {/* Hero Section */}
         <section className="relative flex flex-col items-center justify-center py-20 text-center md:py-32">
 
-          {/* Top Right Photo */}
-          {/* Big Name Text - Static Gold */}
+          {/* Big Name Text - Gradient Gold with Animation */}
           <h1
-            className="mb-8 font-display text-5xl font-bold tracking-tight text-gold md:text-7xl"
+            className="mb-8 font-display text-5xl font-bold tracking-tight gradient-gold md:text-7xl animate-fadeIn"
           >
             {profile.name}
           </h1>
 
-          <div className="relative mb-8 h-40 w-40 overflow-hidden rounded-full border-4 border-white/5 shadow-2xl md:h-56 md:w-56">
+          {/* Floating Profile Photo */}
+          <div className="relative mb-8 h-40 w-40 overflow-hidden rounded-full border-4 border-teal-500/30 shadow-2xl shadow-teal-500/20 md:h-56 md:w-56 animate-float hover-lift">
+            <div className="absolute inset-0 bg-gradient-to-br from-teal-500/20 to-transparent z-10 pointer-events-none"></div>
             <Image
               src="/photo.jpg"
               alt={profile.name}
@@ -122,16 +128,21 @@ export default function Home() {
               priority
             />
           </div>
-          <div className="max-w-4xl px-4">
+
+          {/* Tagline with staggered animation */}
+          <div className="max-w-4xl px-4 animate-slideUp" style={{ animationDelay: '0.2s', opacity: 0 }}>
             <p className="font-display text-2xl font-medium leading-relaxed text-slate-200 md:text-3xl lg:text-4xl">
-              <span className="text-teal-400">More than 20 years</span> of research experience in the field of <span className="text-teal-400">biophysical chemistry</span>, <span className="text-teal-400">structural biology</span> and <span className="text-teal-400">nano-biotechnology</span> for its application in gene/drug delivery and environmental remediation.
+              <span className="text-teal-400 font-semibold">More than 20 years</span> of research experience in the field of <span className="text-teal-400 font-semibold">biophysical chemistry</span>, <span className="text-teal-400 font-semibold">structural biology</span> and <span className="text-teal-400 font-semibold">nano-biotechnology</span> for its application in gene/drug delivery and environmental remediation.
             </p>
           </div>
-          <div className="mt-10 flex gap-4">
-            <a href="#about" className="rounded-full bg-teal-600 px-8 py-3 text-sm font-semibold text-white shadow-lg shadow-teal-500/20 transition hover:bg-teal-500">
-              Explore Work
+
+          {/* CTA Buttons with enhanced styling */}
+          <div className="mt-10 flex gap-4 animate-slideUp" style={{ animationDelay: '0.4s', opacity: 0 }}>
+            <a href="#about" className="group relative overflow-hidden rounded-full bg-gradient-to-r from-teal-600 to-teal-500 px-8 py-3 text-sm font-semibold text-white shadow-lg shadow-teal-500/30 transition-all hover:shadow-xl hover:shadow-teal-500/40 hover:scale-105">
+              <span className="relative z-10">Explore Work</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             </a>
-            <a href="#contact" className="rounded-full border border-white/10 bg-white/5 px-8 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
+            <a href="#contact" className="group rounded-full border-2 border-teal-500/30 bg-teal-500/5 px-8 py-3 text-sm font-semibold text-white transition-all hover:bg-teal-500/10 hover:border-teal-400/50 hover:scale-105 backdrop-blur-sm">
               Contact Me
             </a>
           </div>
@@ -152,17 +163,26 @@ export default function Home() {
               {/* Scholar Stats Section */}
               {scholarData && scholarData.stats && (
                 <div className="grid grid-cols-3 gap-4 py-6">
-                  <div className="text-center p-4 bg-surface/50 rounded-2xl ring-1 ring-white/5">
-                    <div className="text-3xl font-bold text-gold">{scholarData.stats.citations.all}</div>
-                    <div className="text-xs text-slate-400 uppercase tracking-widest mt-1">Citations</div>
+                  <div className="group text-center p-6 bg-gradient-to-br from-amber-900/20 to-yellow-900/10 rounded-2xl ring-1 ring-amber-500/20 hover:ring-amber-500/40 transition-all duration-300 hover-lift">
+                    <div className="text-4xl font-bold gradient-gold mb-2">
+                      <AnimatedCounter end={scholarData.stats.citations.all} />
+                    </div>
+                    <div className="text-xs text-slate-400 uppercase tracking-widest">Citations</div>
+                    <div className="mt-2 h-1 w-12 mx-auto bg-gradient-to-r from-amber-500 to-yellow-500 rounded-full opacity-50 group-hover:opacity-100 transition-opacity"></div>
                   </div>
-                  <div className="text-center p-4 bg-surface/50 rounded-2xl ring-1 ring-white/5">
-                    <div className="text-3xl font-bold text-teal-400">{scholarData.stats.h_index.all}</div>
-                    <div className="text-xs text-slate-400 uppercase tracking-widest mt-1">h-index</div>
+                  <div className="group text-center p-6 bg-gradient-to-br from-teal-900/20 to-cyan-900/10 rounded-2xl ring-1 ring-teal-500/20 hover:ring-teal-500/40 transition-all duration-300 hover-lift">
+                    <div className="text-4xl font-bold text-teal-400 mb-2">
+                      <AnimatedCounter end={scholarData.stats.h_index.all} />
+                    </div>
+                    <div className="text-xs text-slate-400 uppercase tracking-widest">h-index</div>
+                    <div className="mt-2 h-1 w-12 mx-auto bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full opacity-50 group-hover:opacity-100 transition-opacity"></div>
                   </div>
-                  <div className="text-center p-4 bg-surface/50 rounded-2xl ring-1 ring-white/5">
-                    <div className="text-3xl font-bold text-indigo-400">{scholarData.stats.i10_index.all}</div>
-                    <div className="text-xs text-slate-400 uppercase tracking-widest mt-1">i10-index</div>
+                  <div className="group text-center p-6 bg-gradient-to-br from-indigo-900/20 to-purple-900/10 rounded-2xl ring-1 ring-indigo-500/20 hover:ring-indigo-500/40 transition-all duration-300 hover-lift">
+                    <div className="text-4xl font-bold text-indigo-400 mb-2">
+                      <AnimatedCounter end={scholarData.stats.i10_index.all} />
+                    </div>
+                    <div className="text-xs text-slate-400 uppercase tracking-widest">i10-index</div>
+                    <div className="mt-2 h-1 w-12 mx-auto bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full opacity-50 group-hover:opacity-100 transition-opacity"></div>
                   </div>
                 </div>
               )}
@@ -247,22 +267,22 @@ export default function Home() {
 
         {/* Research Grid */}
         <section id="research" className="py-20">
-          <h2 className="mb-12 text-center font-display text-4xl text-white">Research Focus</h2>
+          <h2 className="mb-12 text-center font-display text-4xl gradient-text font-bold">Research Focus</h2>
           <div className="grid gap-6 md:grid-cols-3">
             {researchAreas.map((area, index) => (
-              <div key={area.title} className="group glass hover:bg-surface/80 relative overflow-hidden rounded-2xl p-8 transition duration-300 md:min-h-[300px]">
+              <div key={area.title} className="group glass hover:glass-strong relative overflow-hidden rounded-2xl p-8 transition-all duration-500 md:min-h-[300px] hover-lift hover:border-teal-500/30">
 
                 {/* Specific Vector based on Index */}
-                <div className="absolute top-0 right-0 -mt-6 -mr-6 h-32 w-32 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-12 opacity-80">
+                <div className="absolute top-0 right-0 -mt-6 -mr-6 h-32 w-32 transition-all duration-500 group-hover:scale-125 group-hover:rotate-12 opacity-60 group-hover:opacity-100">
                   {index === 0 && ( /* Nanobiotech - Virus/Nanoparticle */
-                    <svg viewBox="0 0 100 100" className="w-full h-full text-teal-500/20 fill-teal-500/10" stroke="currentColor" strokeWidth="1">
+                    <svg viewBox="0 0 100 100" className="w-full h-full text-teal-500/30 fill-teal-500/10 group-hover:text-teal-400/40" stroke="currentColor" strokeWidth="1">
                       <circle cx="50" cy="50" r="30" />
                       <path d="M50 20 L50 10 M50 80 L50 90 M20 50 L10 50 M80 50 L90 50 M29 29 L22 22 M71 71 L78 78 M29 71 L22 78 M71 29 L78 22" />
                       <circle cx="50" cy="50" r="10" fill="currentColor" className="text-teal-400/40" />
                     </svg>
                   )}
                   {index === 1 && ( /* Biophysical - DNA Quadruplex */
-                    <svg viewBox="0 0 100 100" className="w-full h-full text-indigo-500/20 fill-indigo-500/10" stroke="currentColor" strokeWidth="1">
+                    <svg viewBox="0 0 100 100" className="w-full h-full text-indigo-500/30 fill-indigo-500/10 group-hover:text-indigo-400/40" stroke="currentColor" strokeWidth="1">
                       <rect x="30" y="20" width="40" height="10" rx="2" />
                       <rect x="30" y="40" width="40" height="10" rx="2" />
                       <rect x="30" y="60" width="40" height="10" rx="2" />
@@ -270,7 +290,7 @@ export default function Home() {
                     </svg>
                   )}
                   {index === 2 && ( /* Structural - Protein Ribbon */
-                    <svg viewBox="0 0 100 100" className="w-full h-full text-pink-500/20 fill-pink-500/10" stroke="currentColor" strokeWidth="1">
+                    <svg viewBox="0 0 100 100" className="w-full h-full text-pink-500/30 fill-pink-500/10 group-hover:text-pink-400/40" stroke="currentColor" strokeWidth="1">
                       <path d="M20 80 Q 40 10, 50 50 T 80 20" fill="none" strokeWidth="3" />
                       <circle cx="20" cy="80" r="3" fill="currentColor" />
                       <circle cx="80" cy="20" r="3" fill="currentColor" />
@@ -279,8 +299,17 @@ export default function Home() {
                   )}
                 </div>
 
-                <h3 className="mb-4 text-xl font-bold text-teal-400">{area.title}</h3>
-                <p className="text-slate-400 relative z-10">{area.description}</p>
+                <h3 className={`mb-4 text-xl font-bold relative z-10 ${index === 0 ? 'text-teal-400' :
+                  index === 1 ? 'text-indigo-400' :
+                    'text-pink-400'
+                  }`}>{area.title}</h3>
+                <p className="text-slate-400 relative z-10 leading-relaxed">{area.description}</p>
+
+                {/* Hover gradient overlay */}
+                <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 ${index === 0 ? 'bg-gradient-to-br from-teal-500 to-cyan-500' :
+                  index === 1 ? 'bg-gradient-to-br from-indigo-500 to-purple-500' :
+                    'bg-gradient-to-br from-pink-500 to-rose-500'
+                  }`}></div>
               </div>
             ))}
           </div>
@@ -289,34 +318,49 @@ export default function Home() {
         {/* Publications */}
         <section id="publications" className="py-20">
           <div className="mx-auto max-w-4xl">
-            <h2 className="mb-12 flex items-center gap-4 font-display text-3xl text-white">
-              <span className="h-px flex-1 bg-white/10"></span>
-              Selected Publications
-              <span className="h-px flex-1 bg-white/10"></span>
+            <h2 className="mb-12 flex items-center gap-4 font-display text-3xl text-white font-bold">
+              <span className="h-px flex-1 bg-gradient-to-r from-transparent to-teal-500/50"></span>
+              <span className="gradient-text">Selected Publications</span>
+              <span className="h-px flex-1 bg-gradient-to-l from-transparent to-teal-500/50"></span>
             </h2>
             <div className="space-y-6">
               {scholarData && scholarData.publications ? (
                 scholarData.publications.slice(0, 3).map((pub: any, i: number) => (
-                  <div key={i} className="glass rounded-xl p-6 transition hover:border-gold/30">
-                    <p className="text-sm font-semibold text-gold">{pub.year} • {pub.journal} <span className="text-slate-500">• {pub.citations} Citations</span></p>
-                    <h4 className="mt-2 text-lg font-medium text-white">
-                      <a href={pub.link} target="_blank" rel="noopener noreferrer" className="hover:text-teal-400 transition">{pub.title}</a>
+                  <div key={i} className="glass rounded-xl p-6 transition-all hover:glass-strong hover-lift hover:border-teal-500/30">
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-sm font-bold bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-transparent">{pub.year}</span>
+                      <span className="text-slate-600">•</span>
+                      <span className="text-sm text-slate-400">{pub.journal}</span>
+                      <span className="ml-auto px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 text-xs font-semibold text-teal-400">
+                        {pub.citations} Citations
+                      </span>
+                    </div>
+                    <h4 className="mt-2 text-lg font-medium text-white leading-relaxed">
+                      <a href={pub.link} target="_blank" rel="noopener noreferrer" className="hover:text-teal-400 transition-colors">
+                        {pub.title}
+                      </a>
                     </h4>
                     <p className="mt-2 text-slate-400 text-sm">{pub.authors}</p>
                   </div>
                 ))
               ) : (
                 publications.slice(0, 3).map((pub, i) => (
-                  <div key={i} className="glass rounded-xl p-6 transition hover:border-gold/30">
-                    <p className="text-sm font-semibold text-gold">{pub.year} • {pub.journal}</p>
-                    <h4 className="mt-2 text-lg font-medium text-white">{pub.title}</h4>
+                  <div key={i} className="glass rounded-xl p-6 transition-all hover:glass-strong hover-lift hover:border-teal-500/30">
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-sm font-bold bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-transparent">{pub.year}</span>
+                      <span className="text-slate-600">•</span>
+                      <span className="text-sm text-slate-400">{pub.journal}</span>
+                    </div>
+                    <h4 className="mt-2 text-lg font-medium text-white leading-relaxed">{pub.title}</h4>
                     <p className="mt-2 text-slate-400 text-sm">{pub.authors}</p>
                   </div>
                 ))
               )}
 
-              <div className="mt-8 text-center bg-surface/50 rounded-xl p-4 cursor-pointer hover:bg-surface transition" onClick={() => setActiveModal('publications')}>
-                <span className="text-sm font-medium text-slate-300 ">View Full Publication List ({(scholarData && scholarData.publications) ? scholarData.publications.length : publications.length}+ items) →</span>
+              <div className="mt-8 text-center bg-gradient-to-r from-teal-900/20 via-cyan-900/20 to-teal-900/20 rounded-xl p-6 cursor-pointer hover:from-teal-900/30 hover:via-cyan-900/30 hover:to-teal-900/30 transition-all ring-1 ring-teal-500/20 hover:ring-teal-500/40 group" onClick={() => setActiveModal('publications')}>
+                <span className="text-sm font-medium text-teal-300 group-hover:text-teal-200 transition-colors">
+                  View Full Publication List ({(scholarData && scholarData.publications) ? scholarData.publications.length : publications.length}+ items) →
+                </span>
               </div>
 
               <Modal isOpen={activeModal === 'publications'} onClose={closeModal} title="Complete List of Publications">
@@ -449,35 +493,49 @@ export default function Home() {
         <YouTubeSection />
 
         {/* Contact Footer */}
-        <section id="contact" className="mt-20 rounded-3xl bg-teal-900/10 px-6 py-16 text-center ring-1 ring-teal-500/20">
-          <h2 className="font-display text-3xl text-white">Get in Touch</h2>
-          <p className="mx-auto mt-4 max-w-xl text-slate-400">
-            Open to collaborations, research inquiries, and academic mentorship.
-          </p>
-          <div className="mt-8 flex flex-col items-center gap-4 md:flex-row md:justify-center">
-            <a href={`mailto:${profile.email[0]}`} className="flex items-center gap-2 rounded-lg bg-surface px-6 py-3 text-white transition hover:bg-slate-700">
-              <span>✉</span> {profile.email[0]}
-            </a>
-            <a href={`mailto:${profile.email[1]}`} className="flex items-center gap-2 rounded-lg bg-surface px-6 py-3 text-white transition hover:bg-slate-700">
-              <span>✉</span> {profile.email[1]}
-            </a>
+        <section id="contact" className="mt-20 rounded-3xl bg-gradient-to-br from-teal-900/20 via-cyan-900/10 to-indigo-900/20 px-6 py-16 text-center ring-1 ring-teal-500/30 relative overflow-hidden">
+          {/* Decorative gradient orbs */}
+          <div className="absolute top-0 left-1/4 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl"></div>
+
+          <div className="relative z-10">
+            <h2 className="font-display text-4xl gradient-text font-bold">Get in Touch</h2>
+            <p className="mx-auto mt-4 max-w-xl text-slate-300 text-lg leading-relaxed">
+              Open to collaborations, research inquiries, and academic mentorship.
+            </p>
+            <div className="mt-8 flex flex-col items-center gap-4 md:flex-row md:justify-center">
+              <a href={`mailto:${profile.email[0]}`} className="group flex items-center gap-3 rounded-xl bg-gradient-to-r from-teal-600 to-cyan-600 px-8 py-4 text-white transition-all hover:shadow-xl hover:shadow-teal-500/30 hover:scale-105">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <span className="font-medium">{profile.email[0]}</span>
+              </a>
+              <a href={`mailto:${profile.email[1]}`} className="group flex items-center gap-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-8 py-4 text-white transition-all hover:shadow-xl hover:shadow-indigo-500/30 hover:scale-105">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <span className="font-medium">{profile.email[1]}</span>
+              </a>
+            </div>
+            <p className="mt-12 text-xs text-slate-500">
+              © {new Date().getFullYear()} {profile.name}. All rights reserved.
+            </p>
           </div>
-          <p className="mt-12 text-xs text-slate-600">
-            © {new Date().getFullYear()} {profile.name}. All rights reserved.
-          </p>
         </section>
 
       </main>
 
       {/* Background Gradients & Scientific Vectors */}
+      <ParticleBackground />
       <div className="fixed inset-0 top-0 left-0 -z-10 pointer-events-none overflow-hidden mix-blend-screen">
-        <div className="absolute -top-[20%] -left-[10%] h-[50%] w-[50%] rounded-full bg-teal-900/20 blur-[120px]" />
-        <div className="absolute top-[40%] -right-[10%] h-[40%] w-[40%] rounded-full bg-indigo-900/20 blur-[120px]" />
+        <div className="absolute -top-[20%] -left-[10%] h-[60%] w-[60%] rounded-full bg-teal-900/30 blur-[150px] animate-pulse-glow" />
+        <div className="absolute top-[40%] -right-[10%] h-[50%] w-[50%] rounded-full bg-indigo-900/30 blur-[150px] animate-pulse-glow" style={{ animationDelay: '1s' }} />
+        <div className="absolute bottom-[10%] left-[30%] h-[40%] w-[40%] rounded-full bg-cyan-900/20 blur-[120px] animate-pulse-glow" style={{ animationDelay: '2s' }} />
 
         {/* Scientific SVGs as Background Decor - HIGH OPACITY (50%) */}
 
         {/* DNA Helix - Top Left */}
-        <svg className="absolute top-20 left-10 w-64 h-64 text-teal-800/40 animate-pulse" viewBox="0 0 100 100" fill="currentColor" style={{ opacity: 0.4 }}>
+        <svg className="absolute top-20 left-10 w-64 h-64 text-teal-800/40 animate-pulse-glow" viewBox="0 0 100 100" fill="currentColor" style={{ opacity: 0.4 }}>
           <path d="M30 10 C 20 20, 20 40, 30 50 C 40 60, 40 80, 30 90" stroke="currentColor" strokeWidth="2" fill="none" />
           <path d="M70 10 C 80 20, 80 40, 70 50 C 60 60, 60 80, 70 90" stroke="currentColor" strokeWidth="2" fill="none" />
           <line x1="30" y1="15" x2="70" y2="15" stroke="currentColor" strokeWidth="1" />
