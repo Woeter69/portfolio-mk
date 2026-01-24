@@ -31,8 +31,8 @@ export default function ResearchGroupPage() {
                     <button
                         onClick={() => setActiveTab('current')}
                         className={`px-8 py-3 rounded-full font-semibold transition-all ${activeTab === 'current'
-                                ? 'bg-gradient-to-r from-teal-600 to-cyan-600 text-white shadow-lg shadow-teal-500/30'
-                                : 'bg-surface/50 text-slate-400 hover:bg-surface hover:text-white'
+                            ? 'bg-gradient-to-r from-teal-600 to-cyan-600 text-white shadow-lg shadow-teal-500/30'
+                            : 'bg-surface/50 text-slate-400 hover:bg-surface hover:text-white'
                             }`}
                     >
                         Current Scholars ({currentScholars.length})
@@ -40,8 +40,8 @@ export default function ResearchGroupPage() {
                     <button
                         onClick={() => setActiveTab('past')}
                         className={`px-8 py-3 rounded-full font-semibold transition-all ${activeTab === 'past'
-                                ? 'bg-gradient-to-r from-teal-600 to-cyan-600 text-white shadow-lg shadow-teal-500/30'
-                                : 'bg-surface/50 text-slate-400 hover:bg-surface hover:text-white'
+                            ? 'bg-gradient-to-r from-teal-600 to-cyan-600 text-white shadow-lg shadow-teal-500/30'
+                            : 'bg-surface/50 text-slate-400 hover:bg-surface hover:text-white'
                             }`}
                     >
                         Past Scholars ({pastScholars.length})
@@ -82,10 +82,14 @@ export default function ResearchGroupPage() {
                                 {/* Stats */}
                                 <div className="flex justify-center gap-4 mt-4 pt-4 border-t border-white/5">
                                     <div className="text-center">
-                                        <div className="text-lg font-bold text-gold">{scholar.publications}</div>
+                                        <div className="text-lg font-bold text-gold">{scholar.publications || 0}</div>
                                         <div className="text-xs text-slate-500">Publications</div>
                                     </div>
+<<<<<<< HEAD
                                     {typeof scholar.bookChapters === 'number' && scholar.bookChapters > 0 && (
+=======
+                                    {scholar.bookChapters && scholar.bookChapters > 0 && (
+>>>>>>> 8c4e5bb3bfcb6e8cd07514cbdcbe76386f6842a2
                                         <div className="text-center">
                                             <div className="text-lg font-bold text-indigo-400">{scholar.bookChapters}</div>
                                             <div className="text-xs text-slate-500">Chapters</div>
