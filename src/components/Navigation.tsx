@@ -15,9 +15,16 @@ const navLinks = [
     { href: "/teaching", label: "Teaching" },
 ] as const;
 
-export default function Navigation() {
+interface NavigationProps {
+    currentPage?: string;
+}
+
+export default function Navigation({ currentPage }: NavigationProps) {
     const [isScrolled, setIsScrolled] = useState(false);
     const pathname = usePathname();
+
+    // Use currentPage prop if provided, otherwise use pathname
+    const activePage = currentPage || pathname;
 
     useEffect(() => {
         const handleScroll = () => {
@@ -33,8 +40,8 @@ export default function Navigation() {
                 }`}
         >
             <nav className={`flex items-center gap-6 px-6 py-3 transition-all duration-500 ${isScrolled
-                    ? 'glass rounded-full shadow-2xl ring-1 ring-white/10'
-                    : 'bg-transparent rounded-none shadow-none'
+                ? 'glass rounded-full shadow-2xl ring-1 ring-white/10'
+                : 'bg-transparent rounded-none shadow-none'
                 }`}>
                 <Link href="/" className="font-display text-lg font-bold tracking-wide gradient-gold hover:opacity-80 transition-opacity">
                     {profile.name}
@@ -45,9 +52,9 @@ export default function Navigation() {
                         <Link
                             key={link.href}
                             href={link.href}
-                            className={`text-sm font-medium transition-colors ${pathname === link.href
-                                    ? 'text-teal-400'
-                                    : 'text-slate-400 hover:text-teal-300'
+                            className={`text-sm font-medium transition-colors ${activePage === link.href
+                                ? 'text-teal-400'
+                                : 'text-slate-400 hover:text-teal-300'
                                 }`}
                         >
                             {link.label}

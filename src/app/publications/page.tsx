@@ -35,7 +35,7 @@ export default function PublicationsPage() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:3001/scholar');
+                const response = await fetch('/api/scholar');
                 const data = await response.json();
                 setScholarData(data);
             } catch (error) {
@@ -224,7 +224,7 @@ export default function PublicationsPage() {
                         {/* Results Count */}
                         <div className="mt-4 text-sm text-slate-400">
                             Showing <span className="text-teal-400 font-semibold">{filteredPublications.length}</span> of{' '}
-                            <span className="text-teal-400 font-semibold">{scholarData?.publications.length || 0}</span> publications
+                            <span className="text-teal-400 font-semibold">{scholarData?.publications?.length || 0}</span> publications
                         </div>
                     </div>
 
