@@ -85,7 +85,7 @@ export default function ResearchGroupPage() {
                                         <div className="text-lg font-bold text-gold">{scholar.publications}</div>
                                         <div className="text-xs text-slate-500">Publications</div>
                                     </div>
-                                    {scholar.bookChapters > 0 && (
+                                    {typeof scholar.bookChapters === 'number' && scholar.bookChapters > 0 && (
                                         <div className="text-center">
                                             <div className="text-lg font-bold text-indigo-400">{scholar.bookChapters}</div>
                                             <div className="text-xs text-slate-500">Chapters</div>
