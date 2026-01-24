@@ -93,11 +93,11 @@ export default function ScholarProfilePage({ params }: { params: Promise<{ id: s
                 {/* Stats Cards */}
                 <div className="grid md:grid-cols-3 gap-6 mb-8">
                     <div className="glass rounded-2xl p-6 text-center hover-lift">
-                        <div className="text-4xl font-bold gradient-gold mb-2">{scholar.publications}</div>
+                        <div className="text-4xl font-bold gradient-gold mb-2">{scholar.publications || 0}</div>
                         <div className="text-sm text-slate-400 uppercase tracking-widest">Publications</div>
                     </div>
                     <div className="glass rounded-2xl p-6 text-center hover-lift">
-                        <div className="text-4xl font-bold text-indigo-400 mb-2">{scholar.bookChapters}</div>
+                        <div className="text-4xl font-bold text-indigo-400 mb-2">{scholar.bookChapters || 0}</div>
                         <div className="text-sm text-slate-400 uppercase tracking-widest">Book Chapters</div>
                     </div>
                     <div className="glass rounded-2xl p-6 text-center hover-lift">
