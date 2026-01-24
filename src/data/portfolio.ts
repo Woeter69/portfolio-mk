@@ -5,6 +5,9 @@ export const profile = {
     university: "University of Delhi, Delhi",
     email: ["mkaushik@cic.du.ac.in", "kaushikmahima@yahoo.com"],
     address: "Saraswati Vihar, Pitampura, Delhi",
+    socials: {
+        googleScholar: "https://scholar.google.com/citations?user=PZ-8nBQAAAAJ",
+    },
     about: `Professor at Cluster Innovation Centre, University of Delhi. With a career spanning over two decades, I specialize in the synthesis of nano-bioconjugates for biosensing and drug delivery, alongside deciphering the biophysical aspects of DNA multistranded structures. My work bridges the gap between fundamental chemistry and applied biology, striving to create innovations that address real-world challenges in health and environment.`,
 };
 
