@@ -7,7 +7,9 @@ export async function GET() {
         const backendUrl = process.env.BACKEND_URL || 'http://localhost:3001';
 
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+        // Reduced to 2.5s to ensure we fail fast and fallback to static data 
+        // before the Vercel/Serverless function execution limit (often 10s) kills the process.
+        const timeoutId = setTimeout(() => controller.abort(), 2500);
 
         const response = await fetch(`${backendUrl}/scholar`, {
             signal: controller.signal,
