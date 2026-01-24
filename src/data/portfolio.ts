@@ -6,10 +6,10 @@ export const profile = {
     email: ["mkaushik@cic.du.ac.in", "kaushikmahima@yahoo.com"],
     phone: "011-27666702 (Ext: 205)",
     address: "Saraswati Vihar, Pitampura, Delhi",
-    googleScholar: "https://scholar.google.co.in/citations?user=PZ-8nBQAAAAJ&hl=en&oi=ao",
-    researchGate: "https://www.researchgate.net/profile/Mahima_Kaushik4",
-    orcid: "0000-0002-6453-076X",
-    about: `Professor at Cluster Innovation Centre, University of Delhi, with almost 18-20 years of research experience. Specializing in Nano-biotechnology, I focus on the synthesis and characterization of nano-bioconjugates for applications in biosensing, gene/drug delivery, and environmental solutions. My research also encompasses the biophysical aspects of DNA multistranded structures and their interactions with various ligands, alongside structural biology of nucleic acids and proteins. With over 59 publications and a total impact factor exceeding 200, my work bridges fundamental chemistry and applied biology to address real-world challenges in health and environment.`,
+    socials: {
+        googleScholar: "https://scholar.google.com/citations?user=PZ-8nBQAAAAJ",
+    },
+    about: `Professor at Cluster Innovation Centre, University of Delhi. With a career spanning over two decades, I specialize in the synthesis of nano-bioconjugates for biosensing and drug delivery, alongside deciphering the biophysical aspects of DNA multistranded structures. My work bridges the gap between fundamental chemistry and applied biology, striving to create innovations that address real-world challenges in health and environment.`,
 };
 
 export const researchAreas = [

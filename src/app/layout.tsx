@@ -23,6 +23,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Layout wrapper
   return (
     <html lang="en" suppressHydrationWarning>
       <body
