@@ -11,6 +11,7 @@ import {
   researchAreas,
   achievements,
 } from "../data/portfolio";
+import YouTubeSection from "../components/YouTubeSection";
 
 export default function Home() {
   const [scholarData, setScholarData] = useState<any>(null);
@@ -137,15 +138,15 @@ export default function Home() {
             {researchAreas.map((area, index) => (
               <div key={area.title} className="group glass hover:glass-strong relative overflow-hidden rounded-2xl p-8 transition-all duration-500 md:min-h-[280px] hover-lift hover:border-teal-500/30">
                 <h3 className={`mb-4 text-xl font-bold relative z-10 ${index === 0 ? 'text-teal-400' :
-                    index === 1 ? 'text-indigo-400' :
-                      'text-pink-400'
+                  index === 1 ? 'text-indigo-400' :
+                    'text-pink-400'
                   }`}>{area.title}</h3>
                 <p className="text-slate-400 relative z-10 leading-relaxed">{area.description}</p>
 
                 {/* Hover gradient overlay */}
                 <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 ${index === 0 ? 'bg-gradient-to-br from-teal-500 to-cyan-500' :
-                    index === 1 ? 'bg-gradient-to-br from-indigo-500 to-purple-500' :
-                      'bg-gradient-to-br from-pink-500 to-rose-500'
+                  index === 1 ? 'bg-gradient-to-br from-indigo-500 to-purple-500' :
+                    'bg-gradient-to-br from-pink-500 to-rose-500'
                   }`}></div>
               </div>
             ))}
@@ -156,6 +157,9 @@ export default function Home() {
             </Link>
           </div>
         </section>
+
+        {/* YouTube Section */}
+        <YouTubeSection />
 
         {/* Contact Section */}
         <section id="contact" className="mt-20 rounded-3xl bg-gradient-to-br from-teal-900/20 via-cyan-900/10 to-indigo-900/20 px-6 py-16 text-center ring-1 ring-teal-500/30 relative overflow-hidden">

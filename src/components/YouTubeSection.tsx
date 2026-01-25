@@ -53,14 +53,19 @@ export default function YouTubeSection() {
     };
 
     return (
-        <section id="youtube" className="py-20 relative overflow-hidden">
+        <section id="youtube" className="py-8 relative overflow-hidden">
             {/* Background Decor */}
-            <div className="absolute inset-0 bg-red-900/5 -z-10" />
-            <div className="absolute -right-20 top-20 w-96 h-96 bg-red-600/10 rounded-full blur-[100px]" />
+            {/* Background Decor */}
+            {/* Red glow removed */}
 
-            <div className="mx-auto max-w-7xl px-6">
+            <div>
+                {/* Section Title */}
+                <h2 className="mb-8 text-center font-display text-4xl gradient-text font-bold">
+                    YouTube
+                </h2>
+
                 {/* Channel Header */}
-                <div className="mb-12 flex flex-col md:flex-row items-center justify-between gap-8 glass p-8 rounded-3xl border border-white/5 bg-gradient-to-br from-white/5 to-transparent">
+                <div className="mb-12 flex flex-col md:flex-row items-center justify-between gap-8 glass p-6 md:p-8 rounded-3xl border border-white/5 bg-gradient-to-br from-white/5 to-transparent">
 
                     <div className="flex items-center gap-6">
                         <div className="relative h-20 w-20 md:h-24 md:w-24 shrink-0 rounded-full overflow-hidden border-2 border-red-600/50 shadow-lg shadow-red-900/20">

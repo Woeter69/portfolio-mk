@@ -2,6 +2,7 @@
 
 import Navigation from '@/components/Navigation';
 import { GraduationCap, BookOpen, Users, Award } from 'lucide-react';
+import YouTubeSection from '@/components/YouTubeSection';
 
 export default function TeachingPage() {
     return (
@@ -83,6 +84,11 @@ export default function TeachingPage() {
                                 </li>
                             </ul>
                         </div>
+                    </div>
+
+                    {/* YouTube Section */}
+                    <div className="mt-20">
+                        <YouTubeSection />
                     </div>
 
                 </div>
