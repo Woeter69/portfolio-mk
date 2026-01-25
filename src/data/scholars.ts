@@ -23,7 +23,7 @@ export const scholars: Scholar[] = [
     {
         id: 'nikita',
         name: 'Nikita',
-        photo: 'https://via.placeholder.com/400x400/14b8a6/ffffff?text=Nikita',
+        photo: '/images/people/Nikita.png',
         currentDesignation: 'Ph.D. Scholar',
         institution: 'Cluster Innovation Centre, University of Delhi',
         email: 'nicksrao03@gmail.com',
@@ -34,7 +34,7 @@ export const scholars: Scholar[] = [
     {
         id: 'aishwarya-arvind',
         name: 'Aishwarya Arvind',
-        photo: 'https://via.placeholder.com/400x400/14b8a6/ffffff?text=Aishwarya',
+        photo: '/images/people/Aishwarya.png',
         currentDesignation: 'Ph.D. Scholar',
         institution: 'Cluster Innovation Centre, University of Delhi',
         email: 'aarvind.phd@cic.du.ac.in',
@@ -45,7 +45,7 @@ export const scholars: Scholar[] = [
     {
         id: 'sakshi-pandey',
         name: 'Sakshi Pandey',
-        photo: 'https://via.placeholder.com/400x400/14b8a6/ffffff?text=Sakshi',
+        photo: '/images/people/Sakshi.png',
         currentDesignation: 'Ph.D. Scholar',
         institution: 'Cluster Innovation Centre, University of Delhi',
         email: 'pandey19sakshi@gmail.com',
@@ -56,7 +56,7 @@ export const scholars: Scholar[] = [
     {
         id: 'hanish',
         name: 'Hanish',
-        photo: 'https://via.placeholder.com/400x400/14b8a6/ffffff?text=Hanish',
+        photo: '/images/people/Hanish.png',
         currentDesignation: 'Ph.D. Scholar',
         institution: 'Cluster Innovation Centre, University of Delhi',
         email: 'hanishkanojia636@gmail.com',
@@ -67,7 +67,7 @@ export const scholars: Scholar[] = [
     {
         id: 'payal-biswas',
         name: 'Payal Biswas',
-        photo: 'https://via.placeholder.com/400x400/14b8a6/ffffff?text=Payal',
+        photo: '/images/people/Payal.png',
         currentDesignation: 'Ph.D. Scholar',
         institution: 'Cluster Innovation Centre, University of Delhi',
         email: 'payaal1661@gmail.com',
@@ -80,7 +80,7 @@ export const scholars: Scholar[] = [
     {
         id: 'dr-amit-singh',
         name: 'Dr. Amit Singh',
-        photo: 'https://via.placeholder.com/400x400/14b8a6/ffffff?text=Dr.+Amit',
+        photo: '/images/people/Amit.png',
         currentDesignation: 'Assistant Professor (Guest)',
         institution: 'Department of Chemistry, Ramjas College, University of Delhi',
         email: 'asingh3@chemistry.du.ac.in',
@@ -102,7 +102,7 @@ export const scholars: Scholar[] = [
     {
         id: 'dr-neelam',
         name: 'Dr. Neelam',
-        photo: 'https://via.placeholder.com/400x400/14b8a6/ffffff?text=Dr.+Neelam',
+        photo: '/images/people/Neelam.png',
         currentDesignation: 'Technical Officer-D',
         institution: 'Atomic Minerals Directorate for Exploration and Research, Department of Atomic Energy Government of India',
         email: 'neelamchemdu@gmail.com',
@@ -117,7 +117,7 @@ export const scholars: Scholar[] = [
     {
         id: 'dr-sonia',
         name: 'Dr. Sonia',
-        photo: 'https://via.placeholder.com/400x400/14b8a6/ffffff?text=Dr.+Sonia',
+        photo: '/images/people/Sonia.png',
         currentDesignation: 'Associate Scientific Editor',
         institution: 'BBA journals portfolio, Elsevier',
         email: 'sonia.khurana35@gmail.com',
@@ -132,7 +132,7 @@ export const scholars: Scholar[] = [
     {
         id: 'dr-komal-mehra',
         name: 'Dr. Komal Mehra',
-        photo: 'https://via.placeholder.com/400x400/14b8a6/ffffff?text=Dr.+Komal',
+        photo: '/images/people/Komal.png',
         currentDesignation: 'Assistant Professor',
         institution: 'Bhagwan Parshuram Institute of Technology, GGSIPU, Delhi',
         email: 'mehrakomal201993@gmail.com',
@@ -147,7 +147,7 @@ export const scholars: Scholar[] = [
     {
         id: 'dr-pankaj-kumar',
         name: 'Dr. Pankaj Kumar',
-        photo: 'https://via.placeholder.com/400x400/14b8a6/ffffff?text=Dr.+Pankaj',
+        photo: '/images/people/Pankaj.png',
         currentDesignation: 'Assistant Professor (Guest)',
         institution: 'Department of Chemistry, Gargi College, University of Delhi',
         email: 'pankajkumar2806chem@gmail.com',
@@ -163,7 +163,7 @@ export const scholars: Scholar[] = [
     {
         id: 'dr-niloy-sarkar',
         name: 'Dr. Niloy Sarkar',
-        photo: 'https://via.placeholder.com/400x400/14b8a6/ffffff?text=Dr.+Niloy',
+        photo: '/images/people/Niloy.png',
         currentDesignation: 'Assistant Professor (Guest)',
         institution: 'Keshav Mahavidyalaya, University of Delhi',
         email: 'niloy@live.in',
