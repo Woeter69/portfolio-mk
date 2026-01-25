@@ -20,7 +20,9 @@ export default function ResearchGroupPage() {
             <main className="relative z-10 mx-auto max-w-7xl px-6 pt-32 pb-20">
                 {/* Page Header */}
                 <section className="text-center mb-16">
-                    <h1 className="font-display text-5xl font-bold gradient-text mb-4">Research Group Members</h1>
+                    <h1 className="text-5xl md:text-6xl font-bold mb-6">
+                        <span className="gradient-gold">Research Group Members</span>
+                    </h1>
                     <p className="text-slate-400 text-lg max-w-2xl mx-auto">
                         Our talented team of researchers working on cutting-edge projects in chemistry and nanotechnology
                     </p>
