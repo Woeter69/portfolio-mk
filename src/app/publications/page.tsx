@@ -41,6 +41,16 @@ export default function PublicationsPage() {
     const [yearFilter, setYearFilter] = useState<string>('all');
     const [sortBy, setSortBy] = useState<'year' | 'citations'>('year');
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+    const [selectedTopic, setSelectedTopic] = useState<string>('all');
+
+    const topics = [
+        { id: 'all', label: 'All Topics' },
+        { id: 'nanoparticle', label: 'Nanoparticles' },
+        { id: 'dna', label: 'DNA / Genetics' },
+        { id: 'biosensor', label: 'Biosensors' },
+        { id: 'cancer', label: 'Cancer / Therapeutics' },
+        { id: 'environmental', label: 'Environmental' }
+    ];
 
     useEffect(() => {
         const fetchData = async () => {
