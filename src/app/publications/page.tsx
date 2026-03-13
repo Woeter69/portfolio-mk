@@ -247,128 +247,86 @@ export default function PublicationsPage() {
                         </div>
                     </div>
 
-                    {/* Publications List */}
-                    <div className="space-y-8 relative">
-                        {/* Vertical Timeline Line */}
-                        <div className="absolute left-[2.25rem] top-4 bottom-4 w-px bg-gradient-to-b from-teal-500/50 via-indigo-500/30 to-transparent hidden md:block"></div>
-
+                    {/* Publications List - Minimalist Clean */}
+                    <div className="space-y-6">
                         {filteredPublications.length === 0 ? (
-                            <div className="glass-strong rounded-3xl p-20 text-center border-white/5">
-                                <div className="inline-flex p-6 bg-slate-800/50 rounded-full mb-6 text-slate-600">
-                                    <BookOpen className="w-16 h-16" />
+                            <div className="rounded-2xl p-16 text-center border border-white/5 bg-white/[0.01]">
+                                <div className="inline-flex p-4 bg-white/5 rounded-full mb-4 text-slate-700">
+                                    <BookOpen className="w-12 h-12" />
                                 </div>
-                                <h3 className="text-2xl font-bold text-white mb-2">No matching publications</h3>
-                                <p className="text-slate-500 max-w-md mx-auto">We couldn't find any papers matching your current search or filter criteria. Try clearing filters.</p>
-                                <button 
-                                    onClick={() => {setSearchTerm(''); setSelectedTopic('all'); setYearFilter('all');}}
-                                    className="mt-8 px-8 py-3 bg-teal-500 text-white rounded-xl font-bold hover:bg-teal-400 transition-colors"
-                                >
-                                    Reset Discovery
-                                </button>
+                                <h3 className="text-xl font-bold text-white mb-1">No matches found</h3>
+                                <p className="text-slate-600 text-sm">Adjust your filters to see more results.</p>
                             </div>
                         ) : (
                             filteredPublications.map((pub, index) => (
                                 <div
                                     key={index}
-                                    className="relative pl-0 md:pl-20 animate-fadeIn"
-                                    style={{ animationDelay: `${index * 0.05}s` }}
+                                    className="group p-6 rounded-2xl border border-white/5 bg-white/[0.01] hover:bg-white/[0.03] hover:border-white/10 transition-all"
                                 >
-                                    {/* Timeline Dot */}
-                                    <div className="absolute left-[1.85rem] top-8 w-4 h-4 rounded-full bg-slate-900 border-2 border-teal-500 z-10 hidden md:block group-hover:scale-125 transition-transform"></div>
-
-                                    <div className="glass-strong rounded-[2rem] p-8 md:p-10 hover-lift group border-white/5 hover:border-teal-500/30 transition-all relative overflow-hidden">
-                                        {/* Subtle background gradient on hover */}
-                                        <div className="absolute inset-0 bg-gradient-to-br from-teal-500/[0.02] to-indigo-500/[0.02] opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                        
-                                        <div className="flex flex-col gap-6 relative z-10">
-                                            <div className="flex justify-between items-start gap-4">
-                                                {/* Title */}
-                                                <h3 className="text-2xl md:text-3xl font-bold text-white leading-tight group-hover:text-teal-400 transition-colors">
-                                                    {pub.link ? (
-                                                        <a
-                                                            href={pub.link}
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
-                                                            className="hover:underline decoration-teal-500/30 underline-offset-8"
-                                                        >
-                                                            {pub.title}
-                                                        </a>
-                                                    ) : (
-                                                        pub.title
-                                                    )}
-                                                </h3>
-                                                
-                                                {/* Year Badge (Desktop) */}
-                                                <div className="hidden md:block">
-                                                    <div className="px-6 py-2 bg-white/5 border border-white/10 rounded-2xl text-xl font-black text-slate-500 group-hover:text-teal-500 group-hover:border-teal-500/20 transition-all">
-                                                        {pub.year}
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            {/* Authors */}
-                                            <div className="flex items-start gap-3 text-slate-300">
-                                                <div className="p-1.5 bg-teal-500/10 rounded-lg mt-0.5">
-                                                    <Users className="w-4 h-4 text-teal-400" />
-                                                </div>
-                                                <p className="text-lg font-medium leading-relaxed italic">{pub.authors}</p>
-                                            </div>
-
-                                            {/* Journal */}
-                                            {pub.journal && (
-                                                <div className="flex items-start gap-3 text-slate-400">
-                                                    <div className="p-1.5 bg-indigo-500/10 rounded-lg mt-0.5">
-                                                        <BookOpen className="w-4 h-4 text-indigo-400" />
-                                                    </div>
-                                                    <p className="text-lg">{pub.journal}</p>
-                                                </div>
-                                            )}
-
-                                            {/* Bottom Actions and Meta */}
-                                            <div className="flex flex-wrap items-center justify-between gap-6 pt-6 border-t border-white/5">
-                                                <div className="flex flex-wrap gap-3">
-                                                    {pub.year && (
-                                                        <div className="md:hidden flex items-center gap-2 px-4 py-2 bg-white/5 rounded-xl text-sm font-bold text-teal-400">
-                                                            {pub.year}
-                                                        </div>
-                                                    )}
-                                                    {pub.citations && parseInt(pub.citations) > 0 && (
-                                                        <div className="flex items-center gap-2 px-4 py-2 bg-gold/10 rounded-xl text-sm font-bold text-gold border border-gold/20">
-                                                            <TrendingUp className="w-4 h-4" />
-                                                            {pub.citations} Citations
-                                                        </div>
-                                                    )}
-                                                </div>
-
-                                                <div className="flex items-center gap-4">
-                                                    <button
-                                                        onClick={() => copyCitation(pub, index)}
-                                                        className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-all border ${
-                                                            copiedIndex === index 
-                                                            ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-400' 
-                                                            : 'bg-white/5 border-white/10 text-slate-400 hover:bg-white/10 hover:text-white'
-                                                        }`}
+                                    <div className="flex flex-col gap-4">
+                                        <div className="flex justify-between items-start gap-4">
+                                            {/* Title */}
+                                            <h3 className="text-lg md:text-xl font-bold text-slate-100 leading-snug group-hover:text-teal-400 transition-colors">
+                                                {pub.link ? (
+                                                    <a
+                                                        href={pub.link}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="hover:underline underline-offset-4"
                                                     >
-                                                        {copiedIndex === index ? (
-                                                            <><Check className="w-4 h-4" /> Copied</>
-                                                        ) : (
-                                                            <><Copy className="w-4 h-4" /> Copy Citation</>
-                                                        )}
-                                                    </button>
-                                                    
-                                                    {pub.link && (
-                                                        <a
-                                                            href={pub.link}
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
-                                                            className="flex items-center gap-2 px-5 py-2.5 bg-teal-500 hover:bg-teal-400 text-slate-950 rounded-xl text-sm font-black transition-all shadow-lg shadow-teal-500/20"
-                                                        >
-                                                            <span>Full Paper</span>
-                                                            <ExternalLink className="w-4 h-4" />
-                                                        </a>
+                                                        {pub.title}
+                                                    </a>
+                                                ) : (
+                                                    pub.title
+                                                )}
+                                            </h3>
+                                            
+                                            {/* Year */}
+                                            <span className="text-sm font-bold text-slate-600 shrink-0">{pub.year}</span>
+                                        </div>
+
+                                        {/* Authors & Journal */}
+                                        <div className="space-y-1">
+                                            <p className="text-sm text-slate-400 leading-relaxed italic">{pub.authors}</p>
+                                            {pub.journal && (
+                                                <p className="text-xs text-slate-500 flex items-center gap-1.5">
+                                                    <BookOpen className="w-3 h-3" />
+                                                    {pub.journal}
+                                                </p>
+                                            )}
+                                        </div>
+
+                                        {/* Actions */}
+                                        <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                                            <div className="flex gap-4">
+                                                {pub.citations && parseInt(pub.citations) > 0 && (
+                                                    <div className="flex items-center gap-1.5 text-[10px] font-bold text-gold uppercase tracking-wider">
+                                                        <TrendingUp className="w-3 h-3" />
+                                                        {pub.citations} Citations
+                                                    </div>
+                                                )}
+                                                <button
+                                                    onClick={() => copyCitation(pub, index)}
+                                                    className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 hover:text-slate-300 uppercase tracking-wider transition-colors"
+                                                >
+                                                    {copiedIndex === index ? (
+                                                        <><Check className="w-3 h-3 text-emerald-500" /> Copied</>
+                                                    ) : (
+                                                        <><Copy className="w-3 h-3" /> Copy Citation</>
                                                     )}
-                                                </div>
+                                                </button>
                                             </div>
+                                            
+                                            {pub.link && (
+                                                <a
+                                                    href={pub.link}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-[10px] font-bold text-teal-500 hover:text-teal-400 uppercase tracking-widest flex items-center gap-1 transition-colors"
+                                                >
+                                                    View Publication <ExternalLink className="w-3 h-3" />
+                                                </a>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
