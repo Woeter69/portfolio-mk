@@ -94,10 +94,10 @@ export default function YouTubeSection() {
                     </div>
 
                     <a
-                        href={`https://youtube.com/${channelData.customUrl}`}
+                        href={`https://youtube.com/@mahimakaushik2465?sub_confirmation=1`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group relative inline-flex items-center gap-2 rounded-full bg-red-600 px-6 py-3 font-semibold text-white shadow-lg shadow-red-600/30 transition hover:bg-red-500 hover:-translate-y-0.5"
+                        className="group relative inline-flex items-center gap-2 rounded-full bg-red-600 px-6 py-3 font-semibold text-white transition hover:bg-red-500"
                     >
                         <span>Subscribe</span>
                         <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
