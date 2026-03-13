@@ -4,15 +4,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { profile } from "../data/portfolio";
+import { Menu, X } from "lucide-react";
 
 const navLinks = [
     { href: "/", label: "Home" },
+    { href: "/research-group", label: "Research" },
     { href: "/publications", label: "Publications" },
-    { href: "/research-group", label: "Research Group" },
     { href: "/projects", label: "Projects" },
-    { href: "/gallery", label: "Gallery" },
-    { href: "/administrative", label: "Administrative" },
     { href: "/teaching", label: "Teaching" },
+    { href: "/administrative", label: "Admin" },
+    { href: "/gallery", label: "Gallery" },
 ] as const;
 
 interface NavigationProps {
@@ -21,14 +22,14 @@ interface NavigationProps {
 
 export default function Navigation({ currentPage }: NavigationProps) {
     const [isScrolled, setIsScrolled] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const pathname = usePathname();
 
-    // Use currentPage prop if provided, otherwise use pathname
     const activePage = currentPage || pathname;
 
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
+            setIsScrolled(window.scrollY > 20);
         };
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
@@ -36,32 +37,62 @@ export default function Navigation({ currentPage }: NavigationProps) {
 
     return (
         <header
-            className={`fixed left-0 right-0 z-50 flex justify-center px-4 transition-all duration-500 ease-in-out ${isScrolled ? 'top-6' : 'top-0'
-                }`}
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+                isScrolled 
+                ? 'bg-background/80 backdrop-blur-md border-b border-border-subtle h-16' 
+                : 'bg-transparent h-24'
+            }`}
         >
-            <nav className={`flex items-center gap-6 px-6 py-3 transition-all duration-500 ${isScrolled
-                ? 'glass rounded-full shadow-2xl ring-1 ring-white/10'
-                : 'bg-transparent rounded-none shadow-none'
-                }`}>
-                <Link href="/" className="font-display text-lg font-bold tracking-wide gradient-gold hover:opacity-80 transition-opacity">
-                    {profile.name}
+            <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
+                <Link href="/" className="font-serif text-xl md:text-2xl font-bold tracking-tighter group">
+                    MK<span className="text-accent-teal group-hover:animate-pulse">.</span>
                 </Link>
-                <div className="hidden h-4 w-px bg-white/10 md:block" />
-                <div className="hidden items-center gap-6 md:flex">
+
+                {/* Desktop Nav */}
+                <nav className="hidden lg:flex items-center gap-8">
                     {navLinks.map((link) => (
                         <Link
                             key={link.href}
                             href={link.href}
-                            className={`text-sm font-medium transition-colors ${activePage === link.href
-                                ? 'text-teal-400'
-                                : 'text-slate-400 hover:text-teal-300'
-                                }`}
+                            className={`text-xs font-bold uppercase tracking-[0.2em] transition-all hover:text-accent-teal ${
+                                activePage === link.href
+                                ? 'text-accent-teal'
+                                : 'text-slate-500'
+                            }`}
                         >
                             {link.label}
                         </Link>
                     ))}
+                </nav>
+
+                {/* Mobile Toggle */}
+                <button 
+                    className="lg:hidden p-2 text-slate-500 hover:text-foreground transition-colors"
+                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                >
+                    {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                </button>
+            </div>
+
+            {/* Mobile Menu Overlay */}
+            {mobileMenuOpen && (
+                <div className="lg:hidden absolute top-full left-0 right-0 bg-background border-b border-border-subtle p-8 animate-fadeIn shadow-2xl">
+                    <nav className="flex flex-col gap-6">
+                        {navLinks.map((link) => (
+                            <Link
+                                key={link.href}
+                                href={link.href}
+                                onClick={() => setMobileMenuOpen(false)}
+                                className={`text-2xl font-serif font-bold ${
+                                    activePage === link.href ? 'text-accent-teal' : 'text-foreground'
+                                }`}
+                            >
+                                {link.label}
+                            </Link>
+                        ))}
+                    </nav>
                 </div>
-            </nav>
+            )}
         </header>
     );
 }
