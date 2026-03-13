@@ -2,25 +2,15 @@
 
 @theme {
   --font-sans: "Inter", system-ui, sans-serif;
-  --font-serif: "Playfair Display", serif;
+  --font-display: "Playfair Display", serif;
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #0f172a;
-  --accent-teal: #0d9488;
-  --border-subtle: #e2e8f0;
-  --surface-muted: #f8fafc;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #f1f5f9;
-    --accent-teal: #14b8a6;
-    --border-subtle: #1e293b;
-    --surface-muted: #111827;
-  }
+  --background: #0f172a; /* Slate 900 */
+  --foreground: #f8fafc; /* Slate 50 */
+  --accent-gold: #d4af37;
+  --accent-gold-dim: #b5952f;
+  --surface: #1e293b; /* Slate 800 */
 }
 
 body {
@@ -31,48 +21,181 @@ body {
   scroll-behavior: smooth;
 }
 
-/* Typography Overrides */
-h1, h2, h3, h4 {
-  font-family: var(--font-serif);
-  letter-spacing: -0.02em;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f172a;
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #14b8a6, #0d9488);
+  border-radius: 6px;
+  border: 2px solid #0f172a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #2dd4bf, #14b8a6);
+}
+
+/* Selection */
+::selection {
+  background: rgba(20, 184, 166, 0.3);
+  color: #5eead4;
 }
 
 @layer utilities {
-  .text-accent {
-    color: var(--accent-teal);
+  .text-gold {
+    color: var(--accent-gold);
   }
-  .bg-muted {
-    background-color: var(--surface-muted);
+  .text-gold-dim {
+    color: var(--accent-gold-dim);
   }
-  .border-academic {
-    border: 1px solid var(--border-subtle);
+  .bg-surface {
+    background-color: var(--surface);
   }
-  
-  /* Replace flashy "glass" with "solid surface" */
-  .card-academic {
-    background-color: var(--background);
-    border: 1px solid var(--border-subtle);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    transition: all 0.2s ease;
+  .glass {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   }
   
-  .card-academic:hover {
-    border-color: var(--accent-teal);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  .glass-strong {
+    background: rgba(30, 41, 59, 0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
   }
-
+  
+  .gradient-text {
+    background: linear-gradient(135deg, #14b8a6 0%, #06b6d4 50%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
   .gradient-gold {
-    color: #b5952f; /* Solid professional gold */
+    background: linear-gradient(135deg, #fbbf24 0%, #d4af37 50%, #b5952f 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
 
-/* Remove all AI-flashy animations */
-.animate-fadeIn {
-  animation: fadeIn 0.4s ease-out forwards;
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 0.8;
+    filter: brightness(1.2);
+  }
+}
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.8s ease-out forwards;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  background-size: 1000px 100%;
+  animation: shimmer 3s infinite;
+}
+
+.spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* Smooth transitions for all interactive elements */
+button, a, .transition-all {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover lift effect */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
