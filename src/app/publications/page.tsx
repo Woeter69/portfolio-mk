@@ -197,6 +197,23 @@ export default function PublicationsPage() {
                         </div>
                     )}
 
+                        {/* Topic Filter Chips */}
+                        <div className="flex flex-wrap justify-center gap-3 mb-8">
+                            {topics.map((topic) => (
+                                <button
+                                    key={topic.id}
+                                    onClick={() => setSelectedTopic(topic.id)}
+                                    className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
+                                        selectedTopic === topic.id
+                                            ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/30 scale-105'
+                                            : 'bg-slate-800/50 text-slate-400 hover:bg-slate-800 hover:text-white border border-slate-700'
+                                    }`}
+                                >
+                                    {topic.label}
+                                </button>
+                            ))}
+                        </div>
+
                     {/* Search and Filters */}
                     <div className="glass rounded-2xl p-6 mb-8">
                         <div className="grid md:grid-cols-4 gap-4">
