@@ -126,28 +126,28 @@ export default function PublicationsPage() {
                 <div className="absolute bottom-20 right-10 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
             </div>
 
-            <main className="relative pt-24 pb-20 px-6">
-                <div className="max-w-6xl mx-auto">
+            <main className="relative pt-32 pb-20 px-6">
+                <div className="max-w-7xl mx-auto">
 
-                    {/* Header */}
-                    <div className="mb-16">
-                        <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight text-white">
+                    {/* Header - Centered for better orientation */}
+                    <div className="mb-16 text-center">
+                        <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight text-white">
                             Research & <span className="text-teal-400">Publications</span>
                         </h1>
-                        <p className="text-lg text-slate-400 max-w-2xl mb-8 leading-relaxed">
+                        <p className="text-xl text-slate-400 max-w-4xl mx-auto mb-10 leading-relaxed">
                             A record of scientific contributions in biophysical chemistry and nano-biotechnology.
                         </p>
 
-                        <div className="flex flex-wrap gap-4">
+                        <div className="flex flex-wrap justify-center gap-4">
                             <a
                                 href="https://scholar.google.com/citations?user=PZ-8nBQAAAAJ&hl=en"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 px-5 py-2.5 bg-teal-500/10 hover:bg-teal-500/20 border border-teal-500/20 rounded-xl text-teal-400 text-sm font-semibold transition-all group"
+                                className="inline-flex items-center gap-2 px-6 py-3 bg-teal-500/10 hover:bg-teal-500/20 border border-teal-500/20 rounded-xl text-teal-400 text-sm font-semibold transition-all group"
                             >
-                                <Award className="w-4 h-4" />
-                                <span>Google Scholar Profile</span>
-                                <ExternalLink className="w-3 h-3 opacity-50 group-hover:opacity-100" />
+                                <Award className="w-5 h-5" />
+                                <span>View Full Scholar Profile</span>
+                                <ExternalLink className="w-4 h-4 opacity-50 group-hover:opacity-100" />
                             </a>
                         </div>
                     </div>
