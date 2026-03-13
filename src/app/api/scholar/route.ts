@@ -2,9 +2,15 @@ import { NextResponse } from 'next/server';
 import { staticStats, staticPublications } from '@/data/publications';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
+import fs from 'fs';
+import path from 'path';
 
 const SCHOLAR_ID = 'PZ-8nBQAAAAJ';
 const SCHOLAR_URL = `https://scholar.google.com/citations?user=${SCHOLAR_ID}&hl=en&oi=ao&cstart=0&pagesize=100`;
+
+// Cache configuration
+const CACHE_FILE = path.join(process.cwd(), '.next', 'scholar-cache.json');
+const CACHE_TTL = 3600 * 1000; // 1 hour in milliseconds
 
 interface ScholarStats {
     citations: { all: number; since2018: number; };
@@ -21,13 +27,56 @@ interface Publication {
     link?: string;
 }
 
+function getCachedData() {
+    try {
+        if (fs.existsSync(CACHE_FILE)) {
+            const cache = JSON.parse(fs.readFileSync(CACHE_FILE, 'utf-8'));
+            const now = Date.now();
+            if (now - cache.timestamp < CACHE_TTL) {
+                console.log('📦 Returning cached Scholar data');
+                return cache.data;
+            }
+        }
+    } catch (e) {
+        console.warn('Failed to read Scholar cache:', e);
+    }
+    return null;
+}
+
+function setCachedData(data: any) {
+    try {
+        const cacheDir = path.dirname(CACHE_FILE);
+        if (!fs.existsSync(cacheDir)) {
+            fs.mkdirSync(cacheDir, { recursive: true });
+        }
+        fs.writeFileSync(CACHE_FILE, JSON.stringify({
+            timestamp: Date.now(),
+            data
+        }));
+        console.log('💾 Scholar data cached successfully');
+    } catch (e) {
+        console.warn('Failed to write Scholar cache:', e);
+    }
+}
+
 export async function GET() {
+    // 1. Try Cache First
+    const cached = getCachedData();
+    if (cached) {
+        return NextResponse.json(cached, {
+            headers: {
+                'X-Cache': 'HIT',
+                'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+            },
+        });
+    }
+
     try {
         const { data } = await axios.get(SCHOLAR_URL, {
             headers: {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
             },
-            timeout: 10000,
+            timeout: 15000,
             maxRedirects: 5,
         });
 
@@ -84,9 +133,12 @@ export async function GET() {
         });
 
         if (stats && publications && publications.length > 0) {
+            const responseData = { stats, publications };
+            setCachedData(responseData);
             console.log('✅ Successfully fetched data from Google Scholar');
-            return NextResponse.json({ stats, publications }, {
+            return NextResponse.json(responseData, {
                 headers: {
+                    'X-Cache': 'MISS',
                     'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
                 },
             });
@@ -107,6 +159,7 @@ export async function GET() {
             {
                 status: 200,
                 headers: {
+                    'X-Cache': 'ERROR',
                     'Cache-Control': 'public, s-maxage=86400',
                 },
             }
