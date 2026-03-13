@@ -130,12 +130,17 @@ export default function PublicationsPage() {
                 <div className="max-w-7xl mx-auto">
 
                     {/* Header */}
-                    <div className="text-center mb-16">
-                        <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                            <span className="gradient-gold">Publications</span>
+                    <div className="text-center mb-20 animate-slideUp">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-400 text-sm font-medium mb-6">
+                            <BookOpen className="w-4 h-4" />
+                            <span>Scholarly Contributions</span>
+                        </div>
+                        <h1 className="text-6xl md:text-7xl font-bold mb-8 tracking-tight">
+                            <span className="gradient-gold">Research Publications</span>
                         </h1>
-                        <p className="text-xl text-slate-400 max-w-3xl mx-auto mb-8">
-                            Comprehensive list of research publications, articles, and scholarly contributions
+                        <p className="text-xl text-slate-400 max-w-3xl mx-auto mb-10 leading-relaxed">
+                            A comprehensive record of scientific impact across biophysical chemistry, 
+                            nano-biotechnology, and structural biology.
                         </p>
 
                         {/* Google Scholar Link */}
@@ -143,53 +148,67 @@ export default function PublicationsPage() {
                             href="https://scholar.google.com/citations?user=PZ-8nBQAAAAJ&hl=en"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-teal-600 to-indigo-600 rounded-full text-white font-semibold hover:shadow-lg hover:shadow-teal-500/50 transition-all hover-lift"
+                            className="inline-flex items-center gap-3 px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-white font-semibold transition-all hover-lift group"
                         >
-                            <Award className="w-5 h-5" />
-                            View Full Google Scholar Profile
-                            <ExternalLink className="w-4 h-4" />
+                            <div className="p-2 bg-teal-500/20 rounded-lg group-hover:bg-teal-500/30 transition-colors">
+                                <Award className="w-5 h-5 text-teal-400" />
+                            </div>
+                            <span>Explore on Google Scholar</span>
+                            <ExternalLink className="w-4 h-4 text-slate-500 group-hover:text-white transition-colors" />
                         </a>
                     </div>
 
                     {/* Stats Overview */}
                     {scholarData?.stats && (
-                        <div className="grid md:grid-cols-3 gap-6 mb-12">
-                            <div className="glass rounded-2xl p-6 text-center hover-lift">
-                                <div className="flex justify-center mb-3">
-                                    <TrendingUp className="w-8 h-8 text-gold" />
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24 relative">
+                            {/* Decorative background for stats */}
+                            <div className="absolute inset-0 bg-teal-500/5 blur-[100px] -z-10 rounded-full"></div>
+                            
+                            <div className="glass-strong rounded-3xl p-10 text-center hover-lift border-white/5 relative overflow-hidden group">
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-gold/5 blur-3xl rounded-full -mr-16 -mt-16 group-hover:bg-gold/10 transition-colors"></div>
+                                <div className="flex justify-center mb-6">
+                                    <div className="p-4 bg-gold/10 rounded-2xl">
+                                        <TrendingUp className="w-10 h-10 text-gold" />
+                                    </div>
                                 </div>
-                                <div className="text-4xl font-bold gradient-gold mb-2">
+                                <div className="text-6xl font-bold gradient-gold mb-3 tracking-tighter">
                                     {scholarData.stats.citations.all.toLocaleString()}
                                 </div>
-                                <div className="text-sm text-slate-400 uppercase tracking-widest mb-1">Total Citations</div>
-                                <div className="text-xs text-slate-500">
-                                    {scholarData.stats.citations.since2018.toLocaleString()} since 2018
+                                <div className="text-sm text-slate-400 uppercase tracking-[0.2em] font-semibold mb-2">Total Citations</div>
+                                <div className="inline-block px-3 py-1 bg-white/5 rounded-full text-xs text-slate-500 font-medium">
+                                    +{scholarData.stats.citations.since2018.toLocaleString()} since 2018
                                 </div>
                             </div>
 
-                            <div className="glass rounded-2xl p-6 text-center hover-lift">
-                                <div className="flex justify-center mb-3">
-                                    <Award className="w-8 h-8 text-teal-400" />
+                            <div className="glass-strong rounded-3xl p-10 text-center hover-lift border-white/5 relative overflow-hidden group">
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/5 blur-3xl rounded-full -mr-16 -mt-16 group-hover:bg-teal-500/10 transition-colors"></div>
+                                <div className="flex justify-center mb-6">
+                                    <div className="p-4 bg-teal-500/10 rounded-2xl">
+                                        <Award className="w-10 h-10 text-teal-400" />
+                                    </div>
                                 </div>
-                                <div className="text-4xl font-bold text-teal-400 mb-2">
+                                <div className="text-6xl font-bold text-teal-400 mb-3 tracking-tighter">
                                     {scholarData.stats.h_index.all}
                                 </div>
-                                <div className="text-sm text-slate-400 uppercase tracking-widest mb-1">h-index</div>
-                                <div className="text-xs text-slate-500">
-                                    {scholarData.stats.h_index.since2018} since 2018
+                                <div className="text-sm text-slate-400 uppercase tracking-[0.2em] font-semibold mb-2">h-index</div>
+                                <div className="inline-block px-3 py-1 bg-white/5 rounded-full text-xs text-slate-500 font-medium">
+                                    i10: {scholarData.stats.i10_index.all} (total)
                                 </div>
                             </div>
 
-                            <div className="glass rounded-2xl p-6 text-center hover-lift">
-                                <div className="flex justify-center mb-3">
-                                    <BookOpen className="w-8 h-8 text-indigo-400" />
+                            <div className="glass-strong rounded-3xl p-10 text-center hover-lift border-white/5 relative overflow-hidden group">
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 blur-3xl rounded-full -mr-16 -mt-16 group-hover:bg-indigo-500/10 transition-colors"></div>
+                                <div className="flex justify-center mb-6">
+                                    <div className="p-4 bg-indigo-500/10 rounded-2xl">
+                                        <Users className="w-10 h-10 text-indigo-400" />
+                                    </div>
                                 </div>
-                                <div className="text-4xl font-bold text-indigo-400 mb-2">
-                                    {scholarData.stats.i10_index.all}
+                                <div className="text-6xl font-bold text-indigo-400 mb-3 tracking-tighter">
+                                    {scholarData.publications.length}
                                 </div>
-                                <div className="text-sm text-slate-400 uppercase tracking-widest mb-1">i10-index</div>
-                                <div className="text-xs text-slate-500">
-                                    {scholarData.stats.i10_index.since2018} since 2018
+                                <div className="text-sm text-slate-400 uppercase tracking-[0.2em] font-semibold mb-2">Journal Articles</div>
+                                <div className="inline-block px-3 py-1 bg-white/5 rounded-full text-xs text-slate-500 font-medium">
+                                    Published in top tier journals
                                 </div>
                             </div>
                         </div>
