@@ -4,16 +4,6 @@ import { useState, useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import { Search, ExternalLink, TrendingUp, Calendar, Users, BookOpen, Award, Copy, Check } from 'lucide-react';
 
-// ... (inside the component, before the return)
-    const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
-
-    const copyCitation = (pub: Publication, index: number) => {
-        const citation = `${pub.authors} (${pub.year}). ${pub.title}. ${pub.journal || ''}`;
-        navigator.clipboard.writeText(citation);
-        setCopiedIndex(index);
-        setTimeout(() => setCopiedIndex(null), 2000);
-    };
-
 interface Publication {
     title: string;
     authors: string;
@@ -42,6 +32,14 @@ export default function PublicationsPage() {
     const [sortBy, setSortBy] = useState<'year' | 'citations'>('year');
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
     const [selectedTopic, setSelectedTopic] = useState<string>('all');
+    const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+
+    const copyCitation = (pub: Publication, index: number) => {
+        const citation = `${pub.authors} (${pub.year}). ${pub.title}. ${pub.journal || ''}`;
+        navigator.clipboard.writeText(citation);
+        setCopiedIndex(index);
+        setTimeout(() => setCopiedIndex(null), 2000);
+    };
 
     const topics = [
         { id: 'all', label: 'All Topics' },
