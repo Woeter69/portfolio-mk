@@ -147,8 +147,8 @@ export default function PublicationsPage() {
                     {/* LEFT SIDEBAR: Profile & Stats */}
                     <div className="lg:col-span-4 space-y-8">
                         
-                        {/* Profile Card */}
-                        <div className="p-8 rounded-[2rem] bg-white/[0.02] border border-white/5 backdrop-blur-3xl sticky top-32">
+                        {/* Profile Card - Sticky removed for natural scroll */}
+                        <div className="p-8 rounded-[2rem] bg-white/[0.02] border border-white/5 backdrop-blur-3xl">
                             <div className="flex flex-col items-center text-center mb-8">
                                 <div className="relative w-32 h-32 mb-6 group">
                                     <div className="absolute -inset-2 bg-gradient-to-tr from-teal-500 to-indigo-500 rounded-full blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
@@ -165,7 +165,7 @@ export default function PublicationsPage() {
                                     </div>
                                     <div className="flex items-center justify-center gap-2">
                                         <GraduationCap className="w-4 h-4 text-slate-600" />
-                                        <span>Nano-biotechnology Specialist</span>
+                                        <span className="whitespace-nowrap">Nano-biotechnology Specialist</span>
                                     </div>
                                 </div>
                             </div>
