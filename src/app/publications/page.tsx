@@ -2,7 +2,17 @@
 
 import { useState, useEffect } from 'react';
 import Navigation from '@/components/Navigation';
-import { Search, ExternalLink, TrendingUp, Calendar, Users, BookOpen, Award } from 'lucide-react';
+import { Search, ExternalLink, TrendingUp, Calendar, Users, BookOpen, Award, Copy, Check } from 'lucide-react';
+
+// ... (inside the component, before the return)
+    const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+
+    const copyCitation = (pub: Publication, index: number) => {
+        const citation = `${pub.authors} (${pub.year}). ${pub.title}. ${pub.journal || ''}`;
+        navigator.clipboard.writeText(citation);
+        setCopiedIndex(index);
+        setTimeout(() => setCopiedIndex(null), 2000);
+    };
 
 interface Publication {
     title: string;
