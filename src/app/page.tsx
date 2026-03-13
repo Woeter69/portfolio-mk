@@ -58,14 +58,14 @@ export default function Home() {
 
           {/* CTA Buttons */}
           <div className="mt-10 flex flex-wrap gap-4 justify-center animate-slideUp" style={{ animationDelay: '0.4s', opacity: 0 }}>
-            <Link href="/publications" className="group relative overflow-hidden rounded-full bg-gradient-to-r from-teal-600 to-teal-500 px-8 py-3 text-sm font-semibold text-white shadow-lg shadow-teal-500/30 transition-all hover:shadow-xl hover:shadow-teal-500/40 hover:scale-105">
+            <Link href="/publications" className="group relative overflow-hidden rounded-full bg-gradient-to-r from-teal-600 to-teal-500 px-8 py-3 text-sm font-semibold text-white transition-all hover:brightness-110">
               <span className="relative z-10">View Publications</span>
               <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             </Link>
-            <Link href="/research-group" className="group rounded-full border-2 border-teal-500/30 bg-teal-500/5 px-8 py-3 text-sm font-semibold text-white transition-all hover:bg-teal-500/10 hover:border-teal-400/50 hover:scale-105 backdrop-blur-sm">
+            <Link href="/research-group" className="group rounded-full border-2 border-teal-500/30 bg-teal-500/5 px-8 py-3 text-sm font-semibold text-white transition-all hover:bg-teal-500/10 hover:border-teal-400/50 backdrop-blur-sm">
               Research Group
             </Link>
-            <a href="#contact" className="group rounded-full border-2 border-indigo-500/30 bg-indigo-500/5 px-8 py-3 text-sm font-semibold text-white transition-all hover:bg-indigo-500/10 hover:border-indigo-400/50 hover:scale-105 backdrop-blur-sm">
+            <a href="#contact" className="group rounded-full border-2 border-indigo-500/30 bg-indigo-500/5 px-8 py-3 text-sm font-semibold text-white transition-all hover:bg-indigo-500/10 hover:border-indigo-400/50 backdrop-blur-sm">
               Contact Me
             </a>
           </div>
