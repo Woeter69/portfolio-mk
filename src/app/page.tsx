@@ -173,13 +173,13 @@ export default function Home() {
               Open to collaborations, research inquiries, and academic mentorship.
             </p>
             <div className="mt-8 flex flex-col items-center gap-4 md:flex-row md:justify-center">
-              <a href={`mailto:${profile.email[0]}`} className="group flex items-center gap-3 rounded-xl bg-gradient-to-r from-teal-600 to-cyan-600 px-8 py-4 text-white transition-all hover:shadow-xl hover:shadow-teal-500/30 hover:scale-105">
+              <a href={`mailto:${profile.email[0]}`} className="group flex items-center gap-3 rounded-xl bg-gradient-to-r from-teal-600 to-cyan-600 px-8 py-4 text-white transition-all hover:brightness-110">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
                 <span className="font-medium">{profile.email[0]}</span>
               </a>
-              <a href={`mailto:${profile.email[1]}`} className="group flex items-center gap-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-8 py-4 text-white transition-all hover:shadow-xl hover:shadow-indigo-500/30 hover:scale-105">
+              <a href={`mailto:${profile.email[1]}`} className="group flex items-center gap-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-8 py-4 text-white transition-all hover:brightness-110">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
