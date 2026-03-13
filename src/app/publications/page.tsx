@@ -45,6 +45,7 @@ interface ScholarData {
     stats: ScholarStats;
     publications: Publication[];
     coAuthors?: CoAuthor[];
+    graph?: { year: string; citations: number }[];
 }
 
 export default function PublicationsPage() {
@@ -145,9 +146,9 @@ export default function PublicationsPage() {
                 <div className="grid lg:grid-cols-12 gap-12">
                     
                     {/* LEFT SIDEBAR: Profile & Stats */}
-                    <div className="lg:col-span-4 space-y-8">
+                    <div className="lg:col-span-4 space-y-8 lg:sticky lg:top-28 lg:h-[calc(100vh-7rem)] lg:overflow-y-auto no-scrollbar pb-8">
                         
-                        {/* Profile Card - Sticky removed for natural scroll */}
+                        {/* Profile Card */}
                         <div className="p-8 rounded-[2rem] bg-white/[0.02] border border-white/5 backdrop-blur-3xl">
                             <div className="flex flex-col items-center text-center mb-8">
                                 <div className="relative w-32 h-32 mb-6 group">
@@ -185,26 +186,36 @@ export default function PublicationsPage() {
                             </div>
 
                             {/* Impact Graph Mockup (Professional CSS Visualization) */}
-                            <div className="mb-8">
-                                <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4 flex items-center gap-2">
-                                    <BarChart3 className="w-3 h-3" /> Citation Impact Trend
-                                </h3>
-                                <div className="flex items-end gap-1 h-24 px-2">
-                                    {[30, 45, 35, 60, 80, 75, 95, 110, 100, 130, 150, 180].map((h, i) => (
-                                        <div 
-                                            key={i} 
-                                            className="flex-1 bg-gradient-to-t from-teal-500/20 to-teal-500/60 rounded-t-sm hover:from-teal-400 hover:to-teal-300 transition-all cursor-help"
-                                            style={{ height: `${h/2}%` }}
-                                            title={`Growth Year ${2012+i}`}
-                                        ></div>
-                                    ))}
+                            {scholarData?.graph && scholarData.graph.length > 0 && (
+                                <div className="mb-8">
+                                    <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+                                        <BarChart3 className="w-3 h-3" /> Citation Impact Trend
+                                    </h3>
+                                    <div className="flex items-end gap-1 h-24 px-2">
+                                        {scholarData.graph.map((data, i) => {
+                                            const maxCitations = Math.max(...scholarData.graph!.map(g => g.citations));
+                                            const height = maxCitations > 0 ? (data.citations / maxCitations) * 100 : 0;
+                                            return (
+                                                <div 
+                                                    key={i} 
+                                                    className="flex-1 bg-gradient-to-t from-teal-500/20 to-teal-500/60 rounded-t-sm hover:from-teal-400 hover:to-teal-300 transition-all cursor-help relative group/bar"
+                                                    style={{ height: `${height}%`, minHeight: '4px' }}
+                                                >
+                                                    {/* Tooltip */}
+                                                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover/bar:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                                                        {data.year}: {data.citations} citations
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                    <div className="flex justify-between text-[10px] text-slate-600 mt-2 px-1">
+                                        <span>{scholarData.graph[0]?.year}</span>
+                                        <span>Impact Over Time</span>
+                                        <span>{scholarData.graph[scholarData.graph.length - 1]?.year}</span>
+                                    </div>
                                 </div>
-                                <div className="flex justify-between text-[10px] text-slate-600 mt-2 px-1">
-                                    <span>2012</span>
-                                    <span>Impact Over Time</span>
-                                    <span>2024</span>
-                                </div>
-                            </div>
+                            )}
 
                             <a
                                 href="https://scholar.google.com/citations?user=PZ-8nBQAAAAJ&hl=en"
