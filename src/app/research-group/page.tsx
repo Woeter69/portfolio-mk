@@ -4,27 +4,31 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Navigation from "../../components/Navigation";
-import ParticleBackground from "../../components/ParticleBackground";
-import { scholars, currentScholars, pastScholars } from "../../data/scholars";
+import { currentScholars, pastScholars } from "../../data/scholars";
 
 export default function ResearchGroupPage() {
-    const [activeTab, setActiveTab] = useState<'current' | 'past'>('past');
+    const [activeTab, setActiveTab] = useState<'current' | 'past'>('current');
 
     const displayScholars = activeTab === 'current' ? currentScholars : pastScholars;
 
     return (
-        <div className="min-h-screen selection:bg-teal-500/30 selection:text-teal-200">
-            <Navigation />
-            <ParticleBackground />
+        <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+            <Navigation currentPage="/research-group" />
+
+            {/* Background Effects */}
+            <div className="fixed inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute top-20 left-10 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute bottom-20 right-10 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+            </div>
 
             <main className="relative z-10 mx-auto max-w-7xl px-6 pt-32 pb-20">
                 {/* Page Header */}
                 <section className="text-center mb-16">
                     <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                        <span className="gradient-gold">Research Group Members</span>
+                        <span className="gradient-gold">Research Team</span>
                     </h1>
-                    <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-                        Our talented team of researchers working on cutting-edge projects in chemistry and nanotechnology
+                    <p className="text-slate-400 text-xl max-w-3xl mx-auto">
+                        A diverse group of dedicated scholars pushing the boundaries of chemical sciences and biotechnology
                     </p>
                 </section>
 
@@ -112,12 +116,6 @@ export default function ResearchGroupPage() {
                     </div>
                 )}
             </main>
-
-            {/* Background */}
-            <div className="fixed inset-0 top-0 left-0 -z-10 pointer-events-none overflow-hidden mix-blend-screen">
-                <div className="absolute -top-[20%] -left-[10%] h-[60%] w-[60%] rounded-full bg-teal-900/30 blur-[150px] animate-pulse-glow" />
-                <div className="absolute top-[40%] -right-[10%] h-[50%] w-[50%] rounded-full bg-indigo-900/30 blur-[150px] animate-pulse-glow" style={{ animationDelay: '1s' }} />
-            </div>
         </div>
     );
 }

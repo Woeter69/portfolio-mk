@@ -2,7 +2,17 @@
 
 import { useState, useEffect } from 'react';
 import Navigation from '@/components/Navigation';
-import { Search, ExternalLink, TrendingUp, Calendar, Users, BookOpen, Award } from 'lucide-react';
+import { Search, ExternalLink, TrendingUp, Calendar, Users, BookOpen, Award, Copy, Check } from 'lucide-react';
+
+// ... (inside the component, before the return)
+    const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+
+    const copyCitation = (pub: Publication, index: number) => {
+        const citation = `${pub.authors} (${pub.year}). ${pub.title}. ${pub.journal || ''}`;
+        navigator.clipboard.writeText(citation);
+        setCopiedIndex(index);
+        setTimeout(() => setCopiedIndex(null), 2000);
+    };
 
 interface Publication {
     title: string;
@@ -31,6 +41,16 @@ export default function PublicationsPage() {
     const [yearFilter, setYearFilter] = useState<string>('all');
     const [sortBy, setSortBy] = useState<'year' | 'citations'>('year');
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+    const [selectedTopic, setSelectedTopic] = useState<string>('all');
+
+    const topics = [
+        { id: 'all', label: 'All Topics' },
+        { id: 'nanoparticle', label: 'Nanoparticles' },
+        { id: 'dna', label: 'DNA / Genetics' },
+        { id: 'biosensor', label: 'Biosensors' },
+        { id: 'cancer', label: 'Cancer / Therapeutics' },
+        { id: 'environmental', label: 'Environmental' }
+    ];
 
     useEffect(() => {
         const fetchData = async () => {
@@ -65,7 +85,11 @@ export default function PublicationsPage() {
 
                 const matchesYear = yearFilter === 'all' || pub.year === yearFilter;
 
-                return matchesSearch && matchesYear;
+                const matchesTopic = selectedTopic === 'all' || 
+                    pub.title.toLowerCase().includes(selectedTopic) ||
+                    pub.journal.toLowerCase().includes(selectedTopic);
+
+                return matchesSearch && matchesYear && matchesTopic;
             })
             .sort((a, b) => {
                 if (sortBy === 'year') {
@@ -172,6 +196,23 @@ export default function PublicationsPage() {
                             </div>
                         </div>
                     )}
+
+                        {/* Topic Filter Chips */}
+                        <div className="flex flex-wrap justify-center gap-3 mb-8">
+                            {topics.map((topic) => (
+                                <button
+                                    key={topic.id}
+                                    onClick={() => setSelectedTopic(topic.id)}
+                                    className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
+                                        selectedTopic === topic.id
+                                            ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/30 scale-105'
+                                            : 'bg-slate-800/50 text-slate-400 hover:bg-slate-800 hover:text-white border border-slate-700'
+                                    }`}
+                                >
+                                    {topic.label}
+                                </button>
+                            ))}
+                        </div>
 
                     {/* Search and Filters */}
                     <div className="glass rounded-2xl p-6 mb-8">
@@ -296,6 +337,23 @@ export default function PublicationsPage() {
                                                         {pub.citations} citations
                                                     </div>
                                                 )}
+                                                <button
+                                                    onClick={() => copyCitation(pub, index)}
+                                                    className="flex items-center gap-1.5 px-3 py-1 bg-slate-800/50 hover:bg-slate-700/50 rounded-full text-xs text-slate-300 border border-slate-700 transition-colors"
+                                                    title="Copy Citation"
+                                                >
+                                                    {copiedIndex === index ? (
+                                                        <>
+                                                            <Check className="w-3.5 h-3.5 text-emerald-400" />
+                                                            <span className="text-emerald-400">Copied!</span>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <Copy className="w-3.5 h-3.5" />
+                                                            <span>Copy Citation</span>
+                                                        </>
+                                                    )}
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
