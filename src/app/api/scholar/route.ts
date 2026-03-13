@@ -27,6 +27,12 @@ interface Publication {
     link?: string;
 }
 
+interface CoAuthor {
+    name: string;
+    link: string;
+    affiliation: string;
+}
+
 function getCachedData() {
     try {
         if (fs.existsSync(CACHE_FILE)) {
@@ -132,8 +138,23 @@ export async function GET() {
             }
         });
 
+        // 3. Scrape Co-authors
+        const coAuthors: CoAuthor[] = [];
+        const coAuthorRows = $('#gsc_rsb_co .gsc_rsb_aa');
+
+        coAuthorRows.each((_, element) => {
+            const nameEl = $(element).find('.gsc_rsb_a_desc a');
+            const name = nameEl.text();
+            const link = `https://scholar.google.com${nameEl.attr('href')}`;
+            const affiliation = $(element).find('.gsc_rsb_a_ext').text();
+
+            if (name) {
+                coAuthors.push({ name, link, affiliation });
+            }
+        });
+
         if (stats && publications && publications.length > 0) {
-            const responseData = { stats, publications };
+            const responseData = { stats, publications, coAuthors };
             setCachedData(responseData);
             console.log('✅ Successfully fetched data from Google Scholar');
             return NextResponse.json(responseData, {
