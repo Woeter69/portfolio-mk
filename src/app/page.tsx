@@ -195,10 +195,10 @@ export default function Home() {
       </main>
 
       {/* Background */}
-      <div className="fixed inset-0 top-0 left-0 -z-10 pointer-events-none overflow-hidden mix-blend-screen">
-        <div className="absolute -top-[20%] -left-[10%] h-[60%] w-[60%] rounded-full bg-teal-900/30 blur-[150px] animate-pulse-glow" />
-        <div className="absolute top-[40%] -right-[10%] h-[50%] w-[50%] rounded-full bg-indigo-900/30 blur-[150px] animate-pulse-glow" style={{ animationDelay: '1s' }} />
-        <div className="absolute bottom-[10%] left-[30%] h-[40%] w-[40%] rounded-full bg-cyan-900/20 blur-[120px] animate-pulse-glow" style={{ animationDelay: '2s' }} />
+      <div className="fixed inset-0 top-0 left-0 -z-10 pointer-events-none overflow-hidden">
+        <div className="absolute -top-[20%] -left-[10%] h-[60%] w-[60%] rounded-full bg-teal-100/40 blur-[150px] animate-pulse-glow" />
+        <div className="absolute top-[40%] -right-[10%] h-[50%] w-[50%] rounded-full bg-indigo-100/40 blur-[150px] animate-pulse-glow" style={{ animationDelay: '1s' }} />
+        <div className="absolute bottom-[10%] left-[30%] h-[40%] w-[40%] rounded-full bg-cyan-100/30 blur-[120px] animate-pulse-glow" style={{ animationDelay: '2s' }} />
       </div>
     </div>
   );
