@@ -1,82 +1,54 @@
-# Getting Started
+# 🎓 Professor Mahima Kaushik - Academic Portfolio
 
-This project consists of a Next.js frontend and an Express.js backend API, designed to be run locally for development or deployed using Docker.
+A modern, high-performance academic portfolio built with Next.js 15, React 19, and Tailwind CSS 4. This project showcases the research, teaching, and administrative contributions of Prof. Mahima Kaushik.
 
-## Development
+## 🚀 Key Features
 
-First, ensure you have Node.js and npm (or yarn/pnpm/bun) installed.
+- **Dynamic Publications System**: Hybrid approach using live Google Scholar scraping with file-based caching and static fallback.
+- **Modern UI/UX**: Professional aesthetic with glassmorphism, smooth animations (Framer Motion style), and a responsive multi-page structure.
+- **Interactive Gallery**: Categorized visual journey through lab work, conferences, and group activities.
+- **YouTube Integration**: Real-time channel statistics and latest videos display using the YouTube Data API.
+- **SEO Optimized**: Advanced metadata, OpenGraph tags, and semantic HTML for high academic visibility.
+- **Comprehensive Sections**:
+    - **Research**: Detailed focus areas and funded projects.
+    - **Teaching**: Mentorship highlights and courses taught.
+    - **Administrative**: Leadership roles and university governance.
+    - **Group**: Individual scholar profiles and research team overview.
 
-### 1. Frontend (Next.js)
+## 🛠️ Technical Stack
 
-Navigate to the project root and install dependencies:
+- **Frontend**: Next.js 15 (App Router), TypeScript, Tailwind CSS 4, Lucide Icons.
+- **Backend/API**: Next.js API Routes (Serverless), Cheerio (Scraping), Axios.
+- **State/Data**: React Hooks, Static Data Fallbacks.
 
-```bash
-npm install
-```
+## 🏃 Getting Started
 
-Then, run the development server:
+### Prerequisites
+- Node.js 18.x or higher
+- YouTube Data API v3 Key (optional, for video section)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Installation
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Create a `.env.local` file:
+   ```env
+   NEXT_PUBLIC_YOUTUBE_API_KEY=your_api_key_here
+   ```
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the Next.js frontend. The page auto-updates as you edit the files in `src/app/`.
+## 📁 Project Structure
 
-### 2. Backend (Express.js API)
+- `src/app/`: Next.js pages and API routes.
+- `src/components/`: Reusable UI components.
+- `src/data/`: Centralized data store (portfolio, publications, scholars).
+- `src/lib/`: Utility functions and API integrations.
+- `public/`: Static assets and images.
 
-Navigate to the `api` directory:
-
-```bash
-cd api
-```
-
-Install dependencies:
-
-```bash
-npm install
-```
-
-Then, run the API server:
-
-```bash
-npm run start
-```
-
-The Express API will typically run on [http://localhost:3001](http://localhost:3001) (check `api/src/index.ts` for the exact port).
-
-## Docker
-
-This project includes Dockerfiles for both the Next.js frontend and the Express.js API, along with a `docker-compose.yml` for easy orchestration.
-
-### 1. Build and Run with Docker Compose
-
-Ensure you have Docker and Docker Compose installed.
-
-From the project root directory, run:
-
-```bash
-docker-compose up --build
-```
-
-This command will seamlessly build all necessary Docker images for both the frontend and backend services, and then start them. It's the recommended way to get your development environment fully up and running.
-
-The Next.js frontend will be accessible at [http://localhost:3000](http://localhost:3000).
-The Express.js API will be accessible at [http://localhost:3001](http://localhost:3001).
-
-To run in detached mode (in the background):
-
-```bash
-docker-compose up -d --build
-```
-
-To stop the services:
-
-```bash
-docker-compose down
-```
+---
+*Maintained with ❤️ for Prof. Mahima Kaushik*
