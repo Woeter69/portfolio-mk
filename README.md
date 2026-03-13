@@ -1,27 +1,27 @@
-# 🎓 Professor Mahima Kaushik - Academic Portfolio
+# Professor Mahima Kaushik - Academic Portfolio
 
 A modern, high-performance academic portfolio built with Next.js 15, React 19, and Tailwind CSS 4. This project showcases the research, teaching, and administrative contributions of Prof. Mahima Kaushik.
 
-## 🚀 Key Features
+## Key Features
 
-- **Dynamic Publications System**: Hybrid approach using live Google Scholar scraping with file-based caching and static fallback.
-- **Modern UI/UX**: Professional aesthetic with glassmorphism, smooth animations (Framer Motion style), and a responsive multi-page structure.
-- **Interactive Gallery**: Categorized visual journey through lab work, conferences, and group activities.
-- **YouTube Integration**: Real-time channel statistics and latest videos display using the YouTube Data API.
-- **SEO Optimized**: Advanced metadata, OpenGraph tags, and semantic HTML for high academic visibility.
-- **Comprehensive Sections**:
-    - **Research**: Detailed focus areas and funded projects.
-    - **Teaching**: Mentorship highlights and courses taught.
-    - **Administrative**: Leadership roles and university governance.
-    - **Group**: Individual scholar profiles and research team overview.
+- Dynamic Publications System: Hybrid approach using live Google Scholar scraping with file-based caching and static fallback.
+- Modern UI/UX: Professional aesthetic using a structured academic layout, deep dark themes, refined typography, and smooth interactions.
+- Interactive Gallery: Categorized visual journey through lab work, conferences, and group activities.
+- YouTube Integration: Real-time channel statistics and latest videos display using the YouTube Data API.
+- SEO Optimized: Advanced metadata, OpenGraph tags, and semantic HTML for high academic visibility.
+- Comprehensive Sections:
+    - Research: Detailed focus areas and funded projects.
+    - Teaching: Mentorship highlights and courses taught.
+    - Administrative: Leadership roles and university governance.
+    - Group: Individual scholar profiles and research team overview.
 
-## 🛠️ Technical Stack
+## Technical Stack
 
-- **Frontend**: Next.js 15 (App Router), TypeScript, Tailwind CSS 4, Lucide Icons.
-- **Backend/API**: Next.js API Routes (Serverless), Cheerio (Scraping), Axios.
-- **State/Data**: React Hooks, Static Data Fallbacks.
+- Frontend: Next.js 15 (App Router), TypeScript, Tailwind CSS 4, Lucide Icons.
+- Backend/API: Next.js API Routes (Serverless), Cheerio (Scraping), Axios.
+- State/Data: React Hooks, Static Data Fallbacks.
 
-## 🏃 Getting Started
+## Getting Started
 
 ### Prerequisites
 - Node.js 18.x or higher
@@ -42,7 +42,7 @@ A modern, high-performance academic portfolio built with Next.js 15, React 19, a
    npm run dev
    ```
 
-## 📁 Project Structure
+## Project Structure
 
 - `src/app/`: Next.js pages and API routes.
 - `src/components/`: Reusable UI components.
@@ -51,4 +51,4 @@ A modern, high-performance academic portfolio built with Next.js 15, React 19, a
 - `public/`: Static assets and images.
 
 ---
-*Maintained with ❤️ for Prof. Mahima Kaushik*
+Maintained for Prof. Mahima Kaushik
