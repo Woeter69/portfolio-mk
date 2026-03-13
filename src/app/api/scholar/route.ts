@@ -153,8 +153,20 @@ export async function GET() {
             }
         });
 
+        // 4. Scrape Citation Graph
+        const graph: { year: string; citations: number }[] = [];
+        const years: string[] = [];
+        $('.gsc_g_t').each((_, el) => years.push($(el).text()));
+        
+        $('.gsc_g_a').each((i, el) => {
+            const citations = parseInt($(el).text() || '0', 10);
+            if (years[i]) {
+                graph.push({ year: years[i], citations });
+            }
+        });
+
         if (stats && publications && publications.length > 0) {
-            const responseData = { stats, publications, coAuthors };
+            const responseData = { stats, publications, coAuthors, graph };
             setCachedData(responseData);
             console.log('✅ Successfully fetched data from Google Scholar');
             return NextResponse.json(responseData, {
