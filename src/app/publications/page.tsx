@@ -232,16 +232,16 @@ export default function PublicationsPage() {
                                             href={author.link} 
                                             target="_blank" 
                                             rel="noopener noreferrer"
-                                            className="flex items-center gap-4 p-3 rounded-xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/5 group"
+                                            className="flex items-center gap-4 p-3 rounded-xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/5 group min-w-0"
                                         >
-                                            <div className="w-10 h-10 rounded-full bg-indigo-500/10 flex items-center justify-center text-indigo-400 font-bold border border-indigo-500/20 group-hover:bg-indigo-500 group-hover:text-white transition-all">
+                                            <div className="w-10 h-10 shrink-0 rounded-full bg-indigo-500/10 flex items-center justify-center text-indigo-400 font-bold border border-indigo-500/20 group-hover:bg-indigo-500 group-hover:text-white transition-all">
                                                 {author.name.charAt(0)}
                                             </div>
                                             <div className="flex-1 min-w-0">
                                                 <div className="text-sm font-bold text-slate-200 truncate">{author.name}</div>
-                                                <div className="text-[10px] text-slate-500 truncate">{author.affiliation}</div>
+                                                <div className="text-[10px] text-slate-500 truncate" title={author.affiliation}>{author.affiliation}</div>
                                             </div>
-                                            <ExternalLink className="w-3 h-3 text-slate-700 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                            <ExternalLink className="w-3 h-3 shrink-0 text-slate-700 opacity-0 group-hover:opacity-100 transition-opacity" />
                                         </a>
                                     ))}
                                 </div>
