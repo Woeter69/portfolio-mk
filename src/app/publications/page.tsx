@@ -214,75 +214,90 @@ export default function PublicationsPage() {
                         </div>
                     )}
 
-                        {/* Topic Filter Chips */}
-                        <div className="flex flex-wrap justify-center gap-3 mb-8">
-                            {topics.map((topic) => (
-                                <button
-                                    key={topic.id}
-                                    onClick={() => setSelectedTopic(topic.id)}
-                                    className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
-                                        selectedTopic === topic.id
-                                            ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/30 scale-105'
-                                            : 'bg-slate-800/50 text-slate-400 hover:bg-slate-800 hover:text-white border border-slate-700'
-                                    }`}
-                                >
-                                    {topic.label}
-                                </button>
-                            ))}
-                        </div>
-
-                    {/* Search and Filters */}
-                    <div className="glass rounded-2xl p-6 mb-8">
-                        <div className="grid md:grid-cols-4 gap-4">
-                            {/* Search */}
-                            <div className="md:col-span-2 relative">
-                                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                    {/* Search and Filters Section */}
+                    <div className="glass-strong rounded-[2rem] p-8 mb-12 border-white/5 shadow-2xl relative overflow-hidden">
+                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-500 via-indigo-500 to-pink-500 opacity-30"></div>
+                        
+                        <div className="flex flex-col gap-8">
+                            {/* Search bar row */}
+                            <div className="relative group">
+                                <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-slate-500 group-focus-within:text-teal-400 transition-colors" />
                                 <input
                                     type="text"
-                                    placeholder="Search by title, author, or journal..."
+                                    placeholder="Search by title, author, journal or keywords..."
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
-                                    className="w-full pl-12 pr-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-teal-500 transition-colors"
+                                    className="w-full pl-16 pr-6 py-5 bg-white/5 border border-white/10 rounded-2xl text-white text-lg placeholder-slate-500 focus:outline-none focus:border-teal-500/50 focus:bg-white/[0.08] transition-all"
                                 />
                             </div>
 
-                            {/* Year Filter */}
-                            <div>
-                                <select
-                                    value={yearFilter}
-                                    onChange={(e) => setYearFilter(e.target.value)}
-                                    className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-teal-500 transition-colors"
-                                >
-                                    <option value="all">All Years</option>
-                                    {years.map(year => (
-                                        <option key={year} value={year}>{year}</option>
+                            {/* Secondary filters row */}
+                            <div className="flex flex-col lg:flex-row gap-6 items-center justify-between">
+                                {/* Topic Chips */}
+                                <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
+                                    {topics.map((topic) => (
+                                        <button
+                                            key={topic.id}
+                                            onClick={() => setSelectedTopic(topic.id)}
+                                            className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all border ${
+                                                selectedTopic === topic.id
+                                                    ? 'bg-teal-500/20 border-teal-500/50 text-teal-300 shadow-lg shadow-teal-500/10'
+                                                    : 'bg-white/5 border-white/10 text-slate-400 hover:bg-white/10 hover:text-white'
+                                            }`}
+                                        >
+                                            {topic.label}
+                                        </button>
                                     ))}
-                                </select>
-                            </div>
+                                </div>
 
-                            {/* Sort */}
-                            <div>
-                                <select
-                                    value={`${sortBy}-${sortOrder}`}
-                                    onChange={(e) => {
-                                        const [by, order] = e.target.value.split('-') as [typeof sortBy, typeof sortOrder];
-                                        setSortBy(by);
-                                        setSortOrder(order);
-                                    }}
-                                    className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-teal-500 transition-colors"
-                                >
-                                    <option value="year-desc">Newest First</option>
-                                    <option value="year-asc">Oldest First</option>
-                                    <option value="citations-desc">Most Cited</option>
-                                    <option value="citations-asc">Least Cited</option>
-                                </select>
+                                {/* Dropdowns */}
+                                <div className="flex gap-3 w-full lg:w-auto">
+                                    <div className="flex-1 lg:w-40">
+                                        <select
+                                            value={yearFilter}
+                                            onChange={(e) => setYearFilter(e.target.value)}
+                                            className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-slate-300 focus:outline-none focus:border-teal-500/50 transition-colors cursor-pointer"
+                                        >
+                                            <option value="all">All Years</option>
+                                            {years.map(year => (
+                                                <option key={year} value={year}>{year}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                    <div className="flex-1 lg:w-48">
+                                        <select
+                                            value={`${sortBy}-${sortOrder}`}
+                                            onChange={(e) => {
+                                                const [by, order] = e.target.value.split('-') as [typeof sortBy, typeof sortOrder];
+                                                setSortBy(by);
+                                                setSortOrder(order);
+                                            }}
+                                            className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-slate-300 focus:outline-none focus:border-teal-500/50 transition-colors cursor-pointer"
+                                        >
+                                            <option value="year-desc">Newest First</option>
+                                            <option value="year-asc">Oldest First</option>
+                                            <option value="citations-desc">Most Cited</option>
+                                            <option value="citations-asc">Least Cited</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        {/* Results Count */}
-                        <div className="mt-4 text-sm text-slate-400">
-                            Showing <span className="text-teal-400 font-semibold">{filteredPublications.length}</span> of{' '}
-                            <span className="text-teal-400 font-semibold">{scholarData?.publications?.length || 0}</span> publications
+                        {/* Results Count Summary */}
+                        <div className="mt-8 pt-6 border-t border-white/5 flex items-center justify-between">
+                            <div className="text-sm text-slate-400 flex items-center gap-2">
+                                <span className="w-2 h-2 rounded-full bg-teal-500 animate-pulse"></span>
+                                Showing <span className="text-white font-bold">{filteredPublications.length}</span> publications
+                            </div>
+                            {searchTerm && (
+                                <button 
+                                    onClick={() => {setSearchTerm(''); setSelectedTopic('all'); setYearFilter('all');}}
+                                    className="text-xs text-teal-400 hover:text-teal-300 transition-colors font-medium underline underline-offset-4"
+                                >
+                                    Clear all filters
+                                </button>
+                            )}
                         </div>
                     </div>
 
