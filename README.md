@@ -51,4 +51,4 @@ A modern, high-performance academic portfolio built with Next.js 15, React 19, a
 - `public/`: Static assets and images.
 
 ---
-Maintained for Prof. Mahima Kaushik
+Maintained for Prof. Mahima Kaushik by @Pranjul-00 @woeter69 @hy69x @chandraguptsharma07
