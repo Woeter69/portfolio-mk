@@ -85,7 +85,11 @@ export default function PublicationsPage() {
 
                 const matchesYear = yearFilter === 'all' || pub.year === yearFilter;
 
-                return matchesSearch && matchesYear;
+                const matchesTopic = selectedTopic === 'all' || 
+                    pub.title.toLowerCase().includes(selectedTopic) ||
+                    pub.journal.toLowerCase().includes(selectedTopic);
+
+                return matchesSearch && matchesYear && matchesTopic;
             })
             .sort((a, b) => {
                 if (sortBy === 'year') {
