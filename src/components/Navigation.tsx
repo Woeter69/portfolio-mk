@@ -60,7 +60,7 @@ export default function Navigation({ currentPage }: NavigationProps) {
                             {link.label}
                             {/* Animated Active Indicator */}
                             {activePage === link.href && (
-                                <span className="absolute -bottom-2 left-0 right-0 h-0.5 bg-teal-400 rounded-full shadow-[0_0_8px_rgba(20,184,166,0.8)]" />
+                                <span className="absolute -bottom-2 left-0 right-0 h-0.5 bg-teal-400 rounded-full" />
                             )}
                         </Link>
                     ))}
