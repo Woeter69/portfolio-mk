@@ -306,6 +306,23 @@ export default function PublicationsPage() {
                                                         {pub.citations} citations
                                                     </div>
                                                 )}
+                                                <button
+                                                    onClick={() => copyCitation(pub, index)}
+                                                    className="flex items-center gap-1.5 px-3 py-1 bg-slate-800/50 hover:bg-slate-700/50 rounded-full text-xs text-slate-300 border border-slate-700 transition-colors"
+                                                    title="Copy Citation"
+                                                >
+                                                    {copiedIndex === index ? (
+                                                        <>
+                                                            <Check className="w-3.5 h-3.5 text-emerald-400" />
+                                                            <span className="text-emerald-400">Copied!</span>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <Copy className="w-3.5 h-3.5" />
+                                                            <span>Copy Citation</span>
+                                                        </>
+                                                    )}
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
