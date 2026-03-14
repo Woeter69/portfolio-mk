@@ -5,33 +5,34 @@ import * as cheerio from 'cheerio';
 import fs from 'fs';
 import path from 'path';
 
+import os from 'os';
+
 const SCHOLAR_ID = 'PZ-8nBQAAAAJ';
 const SCHOLAR_URL = `https://scholar.google.com/citations?user=${SCHOLAR_ID}&hl=en&oi=ao&cstart=0&pagesize=100`;
 
-// Cache configuration
-const CACHE_FILE = path.join(process.cwd(), '.next', 'scholar-cache.json');
+// Cache configuration - Use /tmp for Vercel serverless compatibility
+const CACHE_FILE = path.join(os.tmpdir(), 'scholar-cache.json');
 const CACHE_TTL = 3600 * 1000; // 1 hour in milliseconds
 
-interface ScholarStats {
-    citations: { all: number; since2018: number; };
-    h_index: { all: number; since2018: number; };
-    i10_index: { all: number; since2018: number; };
-}
+// ... (interfaces)
 
-interface Publication {
-    title: string;
-    authors: string;
-    journal: string;
-    year: string;
-    citations: string;
-    link?: string;
-}
+// Static Fallback Data for Graph and Co-Authors
+const staticGraph = [
+    { year: '2012', citations: 37 }, { year: '2013', citations: 26 },
+    { year: '2014', citations: 26 }, { year: '2015', citations: 25 },
+    { year: '2016', citations: 53 }, { year: '2017', citations: 42 },
+    { year: '2018', citations: 74 }, { year: '2019', citations: 60 },
+    { year: '2020', citations: 84 }, { year: '2021', citations: 112 },
+    { year: '2022', citations: 137 }, { year: '2023', citations: 190 },
+    { year: '2024', citations: 197 }, { year: '2025', citations: 250 }
+];
 
-interface CoAuthor {
-    name: string;
-    link: string;
-    affiliation: string;
-}
+const staticCoAuthors = [
+    { name: "Shrikant Kukreti", link: "https://scholar.google.com/citations?user=xZ3_p5cAAAAJ", affiliation: "Professor, Department of Chemistry, University of Delhi" },
+    { name: "Ritushree Kukreti", link: "https://scholar.google.com/citations?user=Rku02yYAAAAJ", affiliation: "CSIR-Institute of Genomics and Integrative Biology" },
+    { name: "Amit Singh", link: "https://scholar.google.com", affiliation: "Researcher, University of Delhi" },
+    { name: "Sonia Khurana", link: "https://scholar.google.com", affiliation: "Researcher, University of Delhi" }
+];
 
 function getCachedData() {
     try {
@@ -187,6 +188,8 @@ export async function GET() {
             {
                 stats: staticStats,
                 publications: staticPublications,
+                coAuthors: staticCoAuthors,
+                graph: staticGraph,
                 isStatic: true
             },
             {
