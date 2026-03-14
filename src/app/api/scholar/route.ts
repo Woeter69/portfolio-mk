@@ -14,7 +14,26 @@ const SCHOLAR_URL = `https://scholar.google.com/citations?user=${SCHOLAR_ID}&hl=
 const CACHE_FILE = path.join(os.tmpdir(), 'scholar-cache.json');
 const CACHE_TTL = 3600 * 1000; // 1 hour in milliseconds
 
-// ... (interfaces)
+interface ScholarStats {
+    citations: { all: number; since2018: number; };
+    h_index: { all: number; since2018: number; };
+    i10_index: { all: number; since2018: number; };
+}
+
+interface Publication {
+    title: string;
+    authors: string;
+    journal: string;
+    year: string;
+    citations: string;
+    link?: string;
+}
+
+interface CoAuthor {
+    name: string;
+    link: string;
+    affiliation: string;
+}
 
 // Static Fallback Data for Graph and Co-Authors
 const staticGraph = [
