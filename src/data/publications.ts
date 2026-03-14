@@ -20,9 +20,9 @@ export interface ScholarStats {
 // Scholar statistics (approximate based on CV data)
 // Note: These will be replaced by live data when scraper works on Vercel
 export const staticStats: ScholarStats = {
-    citations: { all: 3500, since2018: 2800 }, // Estimated based on impact factors
-    h_index: { all: 28, since2018: 24 },
-    i10_index: { all: 45, since2018: 38 }
+    citations: { all: 1652, since2018: 930 },
+    h_index: { all: 22, since2018: 17 },
+    i10_index: { all: 41, since2018: 28 }
 };
 
 // Publications from CV (59 total journal articles)

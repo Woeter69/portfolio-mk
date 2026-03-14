@@ -37,13 +37,17 @@ interface CoAuthor {
 
 // Static Fallback Data for Graph and Co-Authors
 const staticGraph = [
+    { year: '2006', citations: 7 }, { year: '2007', citations: 10 },
+    { year: '2008', citations: 21 }, { year: '2009', citations: 19 },
+    { year: '2010', citations: 18 }, { year: '2011', citations: 176 },
     { year: '2012', citations: 37 }, { year: '2013', citations: 26 },
     { year: '2014', citations: 26 }, { year: '2015', citations: 25 },
     { year: '2016', citations: 53 }, { year: '2017', citations: 42 },
     { year: '2018', citations: 74 }, { year: '2019', citations: 60 },
     { year: '2020', citations: 84 }, { year: '2021', citations: 112 },
     { year: '2022', citations: 137 }, { year: '2023', citations: 190 },
-    { year: '2024', citations: 197 }, { year: '2025', citations: 250 }
+    { year: '2024', citations: 197 }, { year: '2025', citations: 250 },
+    { year: '2026', citations: 41 }
 ];
 
 const staticCoAuthors = [
