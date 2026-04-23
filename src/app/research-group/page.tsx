@@ -3,119 +3,117 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Navigation from "../../components/Navigation";
-import { currentScholars, pastScholars } from "../../data/scholars";
+import Navigation from "@/components/Navigation";
+import { currentScholars, pastScholars } from "@/data/scholars";
 
 export default function ResearchGroupPage() {
-    const [activeTab, setActiveTab] = useState<'current' | 'past'>('current');
+  const [activeTab, setActiveTab] = useState<"current" | "past">("current");
 
-    const displayScholars = activeTab === 'current' ? currentScholars : pastScholars;
+  const displayScholars = activeTab === "current" ? currentScholars : pastScholars;
 
-    return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
-            <Navigation currentPage="/research-group" />
+  return (
+    <div className="min-h-screen bg-[#0B0F19]">
+      <Navigation currentPage="/research-group" />
 
-            {/* Background Effects */}
-            <div className="fixed inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-20 left-10 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl animate-pulse"></div>
-                <div className="absolute bottom-20 right-10 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-            </div>
-
-            <main className="relative z-10 mx-auto max-w-7xl px-6 pt-32 pb-20">
-                {/* Page Header */}
-                <section className="text-center mb-16">
-                    <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                        <span className="gradient-gold">Research Team</span>
-                    </h1>
-                    <p className="text-slate-400 text-xl max-w-3xl mx-auto">
-                        A diverse group of dedicated scholars pushing the boundaries of chemical sciences and biotechnology
-                    </p>
-                </section>
-
-                {/* Tabs */}
-                <div className="flex justify-center gap-4 mb-12">
-                    <button
-                        onClick={() => setActiveTab('current')}
-                        className={`px-8 py-3 rounded-full font-semibold transition-all ${activeTab === 'current'
-                            ? 'bg-gradient-to-r from-teal-600 to-cyan-600 text-white shadow-lg shadow-teal-500/30'
-                            : 'bg-surface/50 text-slate-400 hover:bg-surface hover:text-white'
-                            }`}
-                    >
-                        Current Scholars ({currentScholars.length})
-                    </button>
-                    <button
-                        onClick={() => setActiveTab('past')}
-                        className={`px-8 py-3 rounded-full font-semibold transition-all ${activeTab === 'past'
-                            ? 'bg-gradient-to-r from-teal-600 to-cyan-600 text-white shadow-lg shadow-teal-500/30'
-                            : 'bg-surface/50 text-slate-400 hover:bg-surface hover:text-white'
-                            }`}
-                    >
-                        Past Scholars ({pastScholars.length})
-                    </button>
-                </div>
-
-                {/* Scholars Grid */}
-                <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                    {displayScholars.map((scholar, index) => (
-                        <Link
-                            key={scholar.id}
-                            href={`/research-group/${scholar.id}`}
-                            className="group glass hover:glass-strong rounded-2xl p-6 transition-all duration-300 hover-lift hover:border-teal-500/30"
-                            style={{ animationDelay: `${index * 0.1}s` }}
-                        >
-                            {/* Scholar Photo */}
-                            <div className="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-teal-500/30 group-hover:border-teal-400/50 transition-all">
-                                <div className="absolute inset-0 bg-gradient-to-br from-teal-500/20 to-transparent z-10"></div>
-                                <Image
-                                    src={scholar.photo}
-                                    alt={scholar.name}
-                                    width={128}
-                                    height={128}
-                                    className="object-cover w-full h-full"
-                                />
-                            </div>
-
-                            {/* Scholar Info */}
-                            <div className="text-center">
-                                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-teal-400 transition-colors">
-                                    {scholar.name}
-                                </h3>
-                                <p className="text-sm text-teal-400 mb-2">{scholar.currentDesignation}</p>
-                                {scholar.institution && (
-                                    <p className="text-xs text-slate-400 mb-3 line-clamp-2">{scholar.institution}</p>
-                                )}
-
-                                {/* Stats */}
-                                <div className="flex justify-center gap-4 mt-4 pt-4 border-t border-white/5">
-                                    <div className="text-center">
-                                        <div className="text-lg font-bold text-gold">{scholar.publications || 0}</div>
-                                        <div className="text-xs text-slate-500">Publications</div>
-                                    </div>
-                                    {scholar.bookChapters && scholar.bookChapters > 0 && (
-                                        <div className="text-center">
-                                            <div className="text-lg font-bold text-indigo-400">{scholar.bookChapters}</div>
-                                            <div className="text-xs text-slate-500">Chapters</div>
-                                        </div>
-                                    )}
-                                </div>
-
-                                {/* View Profile Arrow */}
-                                <div className="mt-4 text-sm text-teal-400 group-hover:text-teal-300 transition-colors flex items-center justify-center gap-2">
-                                    <span>View Profile</span>
-                                    <span className="transition-transform group-hover:translate-x-1">→</span>
-                                </div>
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-
-                {/* Empty State */}
-                {displayScholars.length === 0 && (
-                    <div className="text-center py-20">
-                        <p className="text-slate-400 text-lg">No {activeTab} scholars to display.</p>
-                    </div>
-                )}
-            </main>
+      <main className="mx-auto max-w-5xl px-6 pt-32 pb-24">
+        
+        <div className="mb-12">
+          <h1 className="font-display text-4xl font-bold text-white mb-4">
+            Research Group
+          </h1>
+          <p className="font-body text-slate-400 text-lg max-w-2xl">
+            A dedicated group of scholars advancing research in chemical sciences and nanotechnology.
+          </p>
         </div>
-    );
+
+        {/* Tabs */}
+        <div className="flex gap-8 mb-12 border-b border-[#1E2A3A]">
+          <button
+            onClick={() => setActiveTab("current")}
+            className={`pb-4 font-body uppercase tracking-widest text-sm font-medium transition-colors duration-200 ${
+              activeTab === "current"
+                ? "text-[#E8C547] border-b-2 border-[#E8C547]"
+                : "text-slate-400 hover:text-white"
+            }`}
+          >
+            Current Scholars ({currentScholars.length})
+          </button>
+          <button
+            onClick={() => setActiveTab("past")}
+            className={`pb-4 font-body uppercase tracking-widest text-sm font-medium transition-colors duration-200 ${
+              activeTab === "past"
+                ? "text-[#E8C547] border-b-2 border-[#E8C547]"
+                : "text-slate-400 hover:text-white"
+            }`}
+          >
+            Past Scholars ({pastScholars.length})
+          </button>
+        </div>
+
+        {/* Scholars Grid - 2 Column */}
+        <div className="grid gap-8 md:grid-cols-2">
+          {displayScholars.map((scholar) => (
+            <Link
+              key={scholar.id}
+              href={`/research-group/${scholar.id}`}
+              className="group bg-[#0F1520] border border-[#1E2A3A] p-6 hover:border-[#E8C547] transition-colors duration-200 flex gap-6 items-start"
+            >
+              <div className="w-24 h-24 shrink-0 bg-[#0B0F19] border border-[#1E2A3A]">
+                <Image
+                  src={scholar.photo}
+                  alt={scholar.name}
+                  width={96}
+                  height={96}
+                  className="object-cover w-full h-full transition-all duration-300"
+                />
+              </div>
+
+              <div className="flex flex-col flex-grow">
+                <h3 className="font-display text-xl text-white mb-1">
+                  {scholar.name}
+                </h3>
+                <p className="font-body text-sm text-[#E8C547] mb-2">
+                  {scholar.currentDesignation}
+                </p>
+                {scholar.institution && (
+                  <p className="font-body text-xs text-slate-400 mb-4 line-clamp-2">
+                    {scholar.institution}
+                  </p>
+                )}
+
+                <div className="flex gap-6 mt-auto border-t border-[#1E2A3A] pt-4">
+                  <div>
+                    <div className="font-body text-xs text-slate-500 uppercase tracking-widest">
+                      Pubs
+                    </div>
+                    <div className="font-display text-lg text-white">
+                      {scholar.publications || 0}
+                    </div>
+                  </div>
+                  {scholar.bookChapters && scholar.bookChapters > 0 && (
+                    <div>
+                      <div className="font-body text-xs text-slate-500 uppercase tracking-widest">
+                        Chapters
+                      </div>
+                      <div className="font-display text-lg text-white">
+                        {scholar.bookChapters}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        {displayScholars.length === 0 && (
+          <div className="py-20 border border-[#1E2A3A] bg-[#0F1520] text-center">
+            <p className="font-body text-slate-400 text-base">
+              No {activeTab} scholars to display.
+            </p>
+          </div>
+        )}
+      </main>
+    </div>
+  );
 }

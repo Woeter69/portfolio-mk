@@ -11,7 +11,6 @@ export default function YouTubeSection() {
     const [channelData, setChannelData] = useState<YouTubeChannelStats | null>(null);
     const [videos, setVideos] = useState<YouTubeVideo[]>([]);
     const [loading, setLoading] = useState(true);
-
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -36,84 +35,62 @@ export default function YouTubeSection() {
     }, []);
 
     if (loading) {
-        return <div className="py-20 text-center text-slate-500" suppressHydrationWarning>Loading YouTube Content...</div>;
+        return <div className="py-24 text-center font-body text-slate-500 uppercase tracking-widest text-sm">Loading Media...</div>;
     }
 
     if (error || !channelData) {
-        // Show a discrete error message in development or logged in, but for public site maybe just hide?
-        // User wants to debug, so let's show it temporarily or use proper logging.
-        // Let's print the error to the UI so the user can see it on Vercel.
-        return <div className="py-20 text-center text-red-400">Unable to load YouTube Section: {error}</div>;
+        return <div className="py-24 text-center font-body text-slate-500 uppercase tracking-widest text-sm">Media content temporarily unavailable.</div>;
     }
 
-    // Format numbers (e.g. 1500 -> 1.5K)
     const formatCount = (count: string) => {
         const num = parseInt(count);
         return new Intl.NumberFormat('en-US', { notation: "compact", maximumFractionDigits: 1 }).format(num);
     };
 
     return (
-        <section id="youtube" className="py-8 relative overflow-hidden">
-            {/* Background Decor */}
-            {/* Background Decor */}
-            {/* Red glow removed */}
+        <section id="youtube">
+            <div className="bg-[#0F1520] border border-[#1E2A3A] p-8 mb-12 flex flex-col md:flex-row items-center justify-between gap-8">
+                <div className="flex items-center gap-6">
+                    <div className="relative h-20 w-20 shrink-0 bg-[#0B0F19] border border-[#1E2A3A]">
+                        <Image
+                            src={channelData.thumbnailUrl}
+                            alt={channelData.title}
+                            fill
+                            className="object-cover"
+                        />
+                    </div>
+                    <div>
+                        <h2 className="font-display text-2xl font-bold text-white mb-2">
+                            {channelData.title}
+                        </h2>
+                        <div className="flex gap-4 font-body text-sm text-slate-400">
+                            <span>
+                                <strong className="text-white">{formatCount(channelData.subscriberCount)}</strong> Subscribers
+                            </span>
+                            <span className="w-px h-4 bg-[#1E2A3A]" />
+                            <span>
+                                <strong className="text-white">{formatCount(channelData.viewCount)}</strong> Views
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <a
+                    href={`https://youtube.com/@mahimakaushik2465?sub_confirmation=1`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-body text-sm border border-[#1E2A3A] bg-[#0B0F19] px-6 py-3 text-[#E8C547] hover:border-[#E8C547] hover:text-white transition-colors duration-200 uppercase tracking-widest font-medium flex items-center gap-2"
+                >
+                    <span>Subscribe</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                </a>
+            </div>
 
             <div>
-                {/* Section Title */}
-                <h2 className="mb-8 text-center font-display text-4xl gradient-text font-bold">
-                    YouTube
-                </h2>
-
-                {/* Channel Header */}
-                <div className="mb-12 flex flex-col md:flex-row items-center justify-between gap-8 glass p-6 md:p-8 rounded-3xl border border-white/5 bg-gradient-to-br from-white/5 to-transparent">
-
-                    <div className="flex items-center gap-6">
-                        <div className="relative h-20 w-20 md:h-24 md:w-24 shrink-0 rounded-full overflow-hidden border-2 border-red-600/50 shadow-lg shadow-red-900/20">
-                            <Image
-                                src={channelData.thumbnailUrl}
-                                alt={channelData.title}
-                                fill
-                                className="object-cover"
-                            />
-                        </div>
-                        <div>
-                            <h2 className="font-display text-2xl md:text-3xl font-bold text-white mb-2">
-                                {channelData.title}
-                            </h2>
-                            <div className="flex gap-4 text-sm md:text-base text-slate-400">
-                                <span className="flex items-center gap-1.5">
-                                    <svg className="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" /></svg>
-                                    <strong className="text-white">{formatCount(channelData.subscriberCount)}</strong> Subscribers
-                                </span>
-                                <span className="w-px h-4 bg-white/10" />
-                                <span>
-                                    <strong className="text-white">{formatCount(channelData.viewCount)}</strong> Views
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <a
-                        href={`https://youtube.com/@mahimakaushik2465?sub_confirmation=1`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group relative inline-flex items-center gap-2 rounded-full bg-red-600 px-6 py-3 font-semibold text-white transition hover:bg-red-500"
-                    >
-                        <span>Subscribe</span>
-                        <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-                    </a>
+                <div className="mb-6">
+                    <h3 className="font-display text-2xl text-white">Latest Uploads</h3>
                 </div>
-
-                {/* Video Carousel */}
-                <div>
-                    <div className="flex items-center gap-4 mb-8">
-                        <h3 className="text-2xl font-display text-white">Latest Videos</h3>
-                        <div className="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent" />
-                    </div>
-
-                    <VideoCarousel videos={videos} />
-                </div>
-
+                <VideoCarousel videos={videos} />
             </div>
         </section>
     );

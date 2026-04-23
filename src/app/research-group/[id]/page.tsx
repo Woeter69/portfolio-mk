@@ -3,9 +3,8 @@
 import { use } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Navigation from "../../../components/Navigation";
-import ParticleBackground from "../../../components/ParticleBackground";
-import { scholars } from "../../../data/scholars";
+import Navigation from "@/components/Navigation";
+import { scholars } from "@/data/scholars";
 
 export default function ScholarProfilePage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = use(params);
@@ -13,10 +12,10 @@ export default function ScholarProfilePage({ params }: { params: Promise<{ id: s
 
     if (!scholar) {
         return (
-            <div className="min-h-screen flex items-center justify-center">
+            <div className="min-h-screen bg-[#0B0F19] flex items-center justify-center">
                 <div className="text-center">
-                    <h1 className="text-4xl font-bold text-white mb-4">Scholar Not Found</h1>
-                    <Link href="/research-group" className="text-teal-400 hover:text-teal-300">
+                    <h1 className="text-4xl font-display font-bold text-white mb-4">Scholar Not Found</h1>
+                    <Link href="/research-group" className="text-[#4A9EBF] hover:text-[#E8C547] transition-colors duration-200 font-body">
                         ← Back to Research Group
                     </Link>
                 </div>
@@ -25,25 +24,20 @@ export default function ScholarProfilePage({ params }: { params: Promise<{ id: s
     }
 
     return (
-        <div className="min-h-screen selection:bg-teal-500/30 selection:text-teal-200">
-            <Navigation />
-            <ParticleBackground />
+        <div className="min-h-screen bg-[#0B0F19]">
+            <Navigation currentPage="/research-group" />
 
-            <main className="relative z-10 mx-auto max-w-5xl px-6 pt-32 pb-20">
-                {/* Back Button */}
+            <main className="mx-auto max-w-5xl px-6 pt-32 pb-24">
                 <Link
                     href="/research-group"
-                    className="inline-flex items-center gap-2 text-teal-400 hover:text-teal-300 transition-colors mb-8"
+                    className="inline-flex items-center gap-2 text-[#4A9EBF] hover:text-[#E8C547] transition-colors duration-200 mb-8 font-body text-sm uppercase tracking-widest font-medium"
                 >
-                    <span>←</span> Back to Research Group
+                    <span>←</span> Back to Team
                 </Link>
 
-                {/* Scholar Header */}
-                <div className="glass-strong rounded-3xl p-8 md:p-12 mb-8">
-                    <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
-                        {/* Photo */}
-                        <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-teal-500/30 shadow-2xl shadow-teal-500/20 flex-shrink-0">
-                            <div className="absolute inset-0 bg-gradient-to-br from-teal-500/20 to-transparent z-10"></div>
+                <div className="bg-[#0F1520] border border-[#1E2A3A] p-8 md:p-12 mb-12">
+                    <div className="flex flex-col md:flex-row gap-12 items-start">
+                        <div className="w-48 h-48 shrink-0 bg-[#0B0F19] border border-[#1E2A3A]">
                             <Image
                                 src={scholar.photo}
                                 alt={scholar.name}
@@ -53,36 +47,30 @@ export default function ScholarProfilePage({ params }: { params: Promise<{ id: s
                             />
                         </div>
 
-                        {/* Info */}
-                        <div className="flex-1 text-center md:text-left">
-                            <h1 className="font-display text-4xl font-bold gradient-gold mb-3">{scholar.name}</h1>
-                            <p className="text-xl text-teal-400 mb-4">{scholar.currentDesignation}</p>
-                            {scholar.institution && (
-                                <p className="text-slate-300 mb-4">{scholar.institution}</p>
-                            )}
+                        <div className="flex flex-col gap-4 w-full">
+                            <div>
+                                <h1 className="font-display text-4xl font-bold text-white mb-2">{scholar.name}</h1>
+                                <p className="font-body text-[#E8C547] text-lg mb-1">{scholar.currentDesignation}</p>
+                                {scholar.institution && (
+                                    <p className="font-body text-slate-400">{scholar.institution}</p>
+                                )}
+                            </div>
 
-                            {/* Contact Info */}
-                            <div className="flex flex-wrap gap-4 justify-center md:justify-start">
+                            <div className="flex flex-wrap gap-4 mt-2 border-t border-[#1E2A3A] pt-6">
                                 {scholar.email && (
                                     <a
                                         href={`mailto:${scholar.email}`}
-                                        className="flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-600/20 border border-teal-500/30 text-teal-300 hover:bg-teal-600/30 transition-colors"
+                                        className="font-body text-sm text-[#4A9EBF] hover:text-[#E8C547] transition-colors duration-200"
                                     >
-                                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                        </svg>
-                                        <span className="text-sm">{scholar.email}</span>
+                                        Email: {scholar.email}
                                     </a>
                                 )}
                                 {scholar.phone && (
                                     <a
                                         href={`tel:${scholar.phone}`}
-                                        className="flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600/20 border border-indigo-500/30 text-indigo-300 hover:bg-indigo-600/30 transition-colors"
+                                        className="font-body text-sm text-[#4A9EBF] hover:text-[#E8C547] transition-colors duration-200 ml-4"
                                     >
-                                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                                        </svg>
-                                        <span className="text-sm">{scholar.phone}</span>
+                                        Phone: {scholar.phone}
                                     </a>
                                 )}
                             </div>
@@ -90,87 +78,77 @@ export default function ScholarProfilePage({ params }: { params: Promise<{ id: s
                     </div>
                 </div>
 
-                {/* Stats Cards */}
-                <div className="grid md:grid-cols-3 gap-6 mb-8">
-                    <div className="glass rounded-2xl p-6 text-center hover-lift">
-                        <div className="text-4xl font-bold gradient-gold mb-2">{scholar.publications || 0}</div>
-                        <div className="text-sm text-slate-400 uppercase tracking-widest">Publications</div>
+                <div className="grid md:grid-cols-3 gap-6 mb-12">
+                    <div className="bg-[#0F1520] border border-[#1E2A3A] p-8 text-center">
+                        <div className="font-display text-4xl text-[#E8C547] mb-2">{scholar.publications || 0}</div>
+                        <div className="font-body text-xs text-slate-400 uppercase tracking-widest">Publications</div>
                     </div>
-                    <div className="glass rounded-2xl p-6 text-center hover-lift">
-                        <div className="text-4xl font-bold text-indigo-400 mb-2">{scholar.bookChapters || 0}</div>
-                        <div className="text-sm text-slate-400 uppercase tracking-widest">Book Chapters</div>
+                    <div className="bg-[#0F1520] border border-[#1E2A3A] p-8 text-center">
+                        <div className="font-display text-4xl text-[#E8C547] mb-2">{scholar.bookChapters || 0}</div>
+                        <div className="font-body text-xs text-slate-400 uppercase tracking-widest">Book Chapters</div>
                     </div>
-                    <div className="glass rounded-2xl p-6 text-center hover-lift">
-                        <div className="text-4xl font-bold text-teal-400 mb-2">{scholar.status === 'current' ? 'Current' : 'Alumni'}</div>
-                        <div className="text-sm text-slate-400 uppercase tracking-widest">Status</div>
+                    <div className="bg-[#0F1520] border border-[#1E2A3A] p-8 text-center">
+                        <div className="font-display text-4xl text-[#E8C547] mb-2">{scholar.status === 'current' ? 'Current' : 'Alumni'}</div>
+                        <div className="font-body text-xs text-slate-400 uppercase tracking-widest">Status</div>
                     </div>
                 </div>
 
-                {/* Ph.D. Details */}
-                <div className="glass-strong rounded-3xl p-8 space-y-6">
-                    <h2 className="text-2xl font-bold gradient-text mb-6">Ph.D. Details</h2>
+                <div className="bg-[#0F1520] border border-[#1E2A3A] p-8 md:p-12">
+                    <h2 className="font-display text-3xl text-white border-l-[3px] border-[#E8C547] pl-4 mb-8">
+                        Ph.D. Details
+                    </h2>
 
-                    {/* Thesis Title */}
-                    <div>
-                        <h3 className="text-sm font-semibold text-teal-400 uppercase tracking-wider mb-2">Thesis Title</h3>
-                        <p className="text-lg text-slate-200 leading-relaxed">{scholar.thesisTitle}</p>
-                    </div>
-
-                    {/* Supervisors */}
-                    {scholar.supervisors && scholar.supervisors.length > 0 && (
+                    <div className="flex flex-col gap-8">
                         <div>
-                            <h3 className="text-sm font-semibold text-teal-400 uppercase tracking-wider mb-2">Supervisors</h3>
-                            <ul className="space-y-2">
-                                {scholar.supervisors.map((supervisor, index) => (
-                                    <li key={index} className="flex items-start gap-2 text-slate-300">
-                                        <span className="text-gold mt-1">•</span>
-                                        <span>{supervisor}</span>
-                                    </li>
-                                ))}
-                            </ul>
+                            <h3 className="font-body text-sm text-[#4A9EBF] uppercase tracking-widest mb-2">Thesis Title</h3>
+                            <p className="font-display text-xl text-white leading-snug">{scholar.thesisTitle}</p>
                         </div>
-                    )}
 
-                    {/* Dates */}
-                    {(scholar.thesisSubmissionDate || scholar.vivaDate) && (
-                        <div className="grid md:grid-cols-2 gap-6 pt-4 border-t border-white/5">
-                            {scholar.thesisSubmissionDate && (
-                                <div>
-                                    <h3 className="text-sm font-semibold text-teal-400 uppercase tracking-wider mb-2">Thesis Submission</h3>
-                                    <p className="text-slate-300">{scholar.thesisSubmissionDate}</p>
-                                </div>
-                            )}
-                            {scholar.vivaDate && (
-                                <div>
-                                    <h3 className="text-sm font-semibold text-teal-400 uppercase tracking-wider mb-2">Ph.D. Viva</h3>
-                                    <p className="text-slate-300">{scholar.vivaDate}</p>
-                                </div>
-                            )}
-                        </div>
-                    )}
+                        {scholar.supervisors && scholar.supervisors.length > 0 && (
+                            <div>
+                                <h3 className="font-body text-sm text-[#4A9EBF] uppercase tracking-widest mb-2">Supervisors</h3>
+                                <ul className="flex flex-col gap-2">
+                                    {scholar.supervisors.map((supervisor, index) => (
+                                        <li key={index} className="font-body text-slate-400 border-l-2 border-[#1E2A3A] pl-4">
+                                            {supervisor}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
 
-                    {/* Awards & Recognition */}
-                    {scholar.awards && scholar.awards.length > 0 && (
-                        <div className="pt-4 border-t border-white/5">
-                            <h3 className="text-sm font-semibold text-teal-400 uppercase tracking-wider mb-3">Awards & Recognition</h3>
-                            <ul className="space-y-2">
-                                {scholar.awards.map((award, index) => (
-                                    <li key={index} className="flex items-start gap-2 text-slate-300">
-                                        <span className="text-gold mt-1">🏆</span>
-                                        <span>{award}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
+                        {(scholar.thesisSubmissionDate || scholar.vivaDate) && (
+                            <div className="grid md:grid-cols-2 gap-8 pt-8 border-t border-[#1E2A3A]">
+                                {scholar.thesisSubmissionDate && (
+                                    <div>
+                                        <h3 className="font-body text-sm text-[#4A9EBF] uppercase tracking-widest mb-2">Thesis Submission</h3>
+                                        <p className="font-body text-slate-400">{scholar.thesisSubmissionDate}</p>
+                                    </div>
+                                )}
+                                {scholar.vivaDate && (
+                                    <div>
+                                        <h3 className="font-body text-sm text-[#4A9EBF] uppercase tracking-widest mb-2">Ph.D. Viva</h3>
+                                        <p className="font-body text-slate-400">{scholar.vivaDate}</p>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {scholar.awards && scholar.awards.length > 0 && (
+                            <div className="pt-8 border-t border-[#1E2A3A]">
+                                <h3 className="font-body text-sm text-[#4A9EBF] uppercase tracking-widest mb-4">Awards & Recognition</h3>
+                                <ul className="flex flex-col gap-4">
+                                    {scholar.awards.map((award, index) => (
+                                        <li key={index} className="font-body text-slate-400 border-l-2 border-[#1E2A3A] pl-4">
+                                            {award}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </main>
-
-            {/* Background */}
-            <div className="fixed inset-0 top-0 left-0 -z-10 pointer-events-none overflow-hidden mix-blend-screen">
-                <div className="absolute -top-[20%] -left-[10%] h-[60%] w-[60%] rounded-full bg-teal-900/30 blur-[150px] animate-pulse-glow" />
-                <div className="absolute top-[40%] -right-[10%] h-[50%] w-[50%] rounded-full bg-indigo-900/30 blur-[150px] animate-pulse-glow" style={{ animationDelay: '1s' }} />
-            </div>
         </div>
     );
 }
